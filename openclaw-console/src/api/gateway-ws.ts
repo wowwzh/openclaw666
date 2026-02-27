@@ -5,9 +5,37 @@
 
 import { GatewayStatus, GatewayHealth, Channel, ChatMessage } from '../stores/types'
 
-// 配置
-const GATEWAY_WS_URL = 'ws://localhost:18789/ws'
-const GATEWAY_HTTP_URL = 'http://localhost:18789'
+// 配置 - 从Settings store获取
+let GATEWAY_CONFIG = {
+  host: 'localhost',
+  port: 18789,
+  token: '',
+}
+
+// 获取配置URL
+function getGatewayUrls() {
+  const { host, port } = GATEWAY_CONFIG
+  return {
+    ws: `ws://${host}:${port}/ws`,
+    http: `http://${host}:${port}`,
+  }
+}
+
+let GATEWAY_WS_URL = getGatewayUrls().ws
+let GATEWAY_HTTP_URL = getGatewayUrls().http
+
+// 更新配置
+export function updateGatewayConfig(config: { host?: string; port?: number; token?: string }) {
+  if (config.host) GATEWAY_CONFIG.host = config.host
+  if (config.port) GATEWAY_CONFIG.port = config.port
+  if (config.token) GATEWAY_CONFIG.token = config.token
+
+  const urls = getGatewayUrls()
+  GATEWAY_WS_URL = urls.ws
+  GATEWAY_HTTP_URL = urls.http
+
+  console.log('[Gateway] Config updated:', GATEWAY_CONFIG)
+}
 
 // 存储键
 const DEVICE_TOKEN_KEY = 'OPENCLAW_GATEWAY_DEVICE_TOKEN'

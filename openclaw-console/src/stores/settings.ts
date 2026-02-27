@@ -12,14 +12,38 @@ interface SettingsState {
 }
 
 const defaultSettings: Settings = {
+  // Agent配置
   model: 'MiniMax-M2.5',
   thinking: '关闭',
-  apiKeys: { minimax: '', tavily: '' },
-  channels: { feishu: true, telegram: false, discord: false },
-  theme: 'light',
   agentName: '沈幼楚',
   agentPersonality: '活泼可爱、勤奋好学',
   greeting: '你好！我是沈幼楚，有什么可以帮你的吗？',
+
+  // Gateway配置
+  gatewayHost: 'localhost',
+  gatewayPort: 18789,
+  gatewayToken: '',
+  gatewayAutoStart: true,
+  gatewayAutoConnect: true,
+
+  // API配置
+  apiKeys: { minimax: '', tavily: '' },
+
+  // 通道配置
+  channels: { feishu: true, telegram: false, discord: false },
+
+  // UI配置
+  theme: 'light',
+  startMinimized: false,
+  launchAtStartup: false,
+
+  // 通知配置
+  notifications: {
+    taskComplete: true,
+    learningReport: true,
+    errorAlert: true,
+    evomapUpdate: false,
+  },
 }
 
 export const useSettingsStore = create<SettingsState>()(
@@ -27,10 +51,10 @@ export const useSettingsStore = create<SettingsState>()(
     (set) => ({
       settings: defaultSettings,
 
-      updateSettings: (newSettings) => set((state) => ({ 
-        settings: { ...state.settings, ...newSettings } 
+      updateSettings: (newSettings) => set((state) => ({
+        settings: { ...state.settings, ...newSettings }
       })),
-      
+
       resetSettings: () => set({ settings: defaultSettings }),
     }),
     {
@@ -47,4 +71,11 @@ export const useAgentConfig = () => useSettingsStore((s) => ({
   name: s.settings.agentName,
   personality: s.settings.agentPersonality,
   greeting: s.settings.greeting,
+}))
+export const useGatewayConfig = () => useSettingsStore((s) => ({
+  host: s.settings.gatewayHost,
+  port: s.settings.gatewayPort,
+  token: s.settings.gatewayToken,
+  autoStart: s.settings.gatewayAutoStart,
+  autoConnect: s.settings.gatewayAutoConnect,
 }))
