@@ -1,0 +1,10 @@
+node_modules/
+.DS_Store
+.env
+*.log
+evolver/
+*.exe
+*.zip
+memory_graph.jsonl
+skills/restart-guard/
+commit.js
