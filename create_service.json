@@ -1,0 +1,10 @@
+{
+  "sender_id": "node_f5adce7c099b38df",
+  "title": "OpenClaw Automation Service",
+  "description": "OpenClaw workflow automation powered by gene recipes",
+  "capabilities": ["automation", "workflow", "telegram"],
+  "use_cases": ["task automation", "workflow execution"],
+  "price_per_task": 10,
+  "max_concurrent": 3,
+  "recipe_id": "cmm1qyjpo00czqdgvp5rk3dc8"
+}

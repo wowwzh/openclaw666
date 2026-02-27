@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple RAG - 简单检索增强生成系统</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+        
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        
+        .main-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        .status-bar {
+            background: #f0f4ff;
+            padding: 15px 25px;
+            border-bottom: 1px solid #e0e7ff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .status-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #fbbf24;
+            animation: pulse 2s infinite;
+        }
+        
+        .status-dot.ready {
+            background: #22c55e;
+            animation: none;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .status-text {
+            color: #4b5563;
+            font-size: 0.95em;
+        }
+        
+        .chat-area {
+            height: 400px;
+            overflow-y: auto;
+            padding: 25px;
+            background: #fafbfc;
+        }
+        
+        .message {
+            margin-bottom: 20px;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .message.user {
+            text-align: right;
+        }
+        
+        .message .avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            vertical-align: middle;
+            margin-right: 10px;
+        }
+        
+        .message.user .avatar {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            margin-right: 0;
+            margin-left: 10px;
+        }
+        
+        .message.bot .avatar {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+        
+        .message .bubble {
+            display: inline-block;
+            max-width: 70%;
+            padding: 12px 18px;
+            border-radius: 18px;
+            line-height: 1.6;
+            text-align: left;
+        }
+        
+        .message.user .bubble {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+        
+        .message.bot .bubble {
+            background: white;
+            color: #1f2937;
+            border: 1px solid #e5e7eb;
+            border-bottom-left-radius: 4px;
+        }
+        
+        .sources {
+            margin-top: 15px;
+            padding: 15px;
+            background: #f9fafb;
+            border-radius: 12px;
+            border-left: 4px solid #8b5cf6;
+        }
+        
+        .sources h4 {
+            color: #6b7280;
+            font-size: 0.85em;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .source-item {
+            background: white;
+            padding: 10px 14px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            border: 1px solid #e5e7eb;
+            font-size: 0.9em;
+        }
+        
+        .source-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .source-title {
+            font-weight: 600;
+            color: #7c3aed;
+            margin-bottom: 5px;
+        }
+        
+        .source-content {
+            color: #4b5563;
+            font-size: 0.85em;
+            line-height: 1.5;
+        }
+        
+        .source-similarity {
+            display: inline-block;
+            background: #ede9fe;
+            color: #7c3aed;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.75em;
+            margin-top: 8px;
+        }
+        
+        .input-area {
+            padding: 20px 25px;
+            background: white;
+            border-top: 1px solid #e5e7eb;
+            display: flex;
+            gap: 15px;
+        }
+        
+        .input-area input {
+            flex: 1;
+            padding: 14px 20px;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+            outline: none;
+        }
+        
+        .input-area input:focus {
+            border-color: #8b5cf6;
+        }
+        
+        .input-area button {
+            padding: 14px 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .input-area button:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+        
+        .input-area button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .sample-questions {
+            padding: 15px 25px;
+            background: #f9fafb;
+            border-top: 1px solid #e5e7eb;
+        }
+        
+        .sample-questions h4 {
+            color: #6b7280;
+            font-size: 0.85em;
+            margin-bottom: 10px;
+        }
+        
+        .sample-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .sample-tag {
+            background: #ede9fe;
+            color: #7c3aed;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.2s;
+        }
+        
+        .sample-tag:hover {
+            background: #ddd6fe;
+            transform: scale(1.05);
+        }
+        
+        .loading {
+            display: inline-block;
+            padding: 10px;
+        }
+        
+        .loading::after {
+            content: '';
+            animation: dots 1.5s infinite;
+        }
+        
+        @keyframes dots {
+            0%, 20% { content: '.'; }
+            40% { content: '..'; }
+            60%, 100% { content: '...'; }
+        }
+        
+        .info-panel {
+            padding: 20px 25px;
+            background: #f0f4ff;
+            border-bottom: 1px solid #e0e7ff;
+            font-size: 0.9em;
+            color: #4b5563;
+        }
+        
+        .info-panel code {
+            background: #e0e7ff;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Monaco', 'Consolas', monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🤖 Simple RAG</h1>
+            <p>检索增强生成系统 - 纯前端实现</p>
+        </header>
+        
+        <div class="main-card">
+            <div class="status-bar">
+                <div class="status-dot" id="statusDot"></div>
+                <span class="status-text" id="statusText">正在初始化向量存储...</span>
+            </div>
+            
+            <div class="chat-area" id="chatArea">
+                <div class="message bot">
+                    <span class="avatar">🤖</span>
+                    <div class="bubble">
+                        您好！我是基于RAG技术的智能问答助手。我已加载了技术文档，可以回答您关于编程、前端、后端、机器学习等方面的问题。请直接输入您的问题！
+                    </div>
+                </div>
+            </div>
+            
+            <div class="input-area">
+                <input type="text" id="queryInput" placeholder="请输入您的问题..." autocomplete="off">
+                <button id="sendBtn" onclick="sendMessage()">发送</button>
+            </div>
+            
+            <div class="sample-questions">
+                <h4>💡 试试这样问：</h4>
+                <div class="sample-tags">
+                    <span class="sample-tag" onclick="askSample('JavaScript 是什么？')">JavaScript 是什么？</span>
+                    <span class="sample-tag" onclick="askSample('Python 有什么特点？')">Python 有什么特点？</span>
+                    <span class="sample-tag" onclick="askSample('前端开发需要学什么？')">前端开发需要学什么？</span>
+                    <span class="sample-tag" onclick="askSample('后端开发是什么？')">后端开发是什么？</span>
+                    <span class="sample-tag" onclick="askSample('数据库有哪些类型？')">数据库有哪些类型？</span>
+                    <span class="sample-tag" onclick="askSample('机器学习和深度学习有什么区别？')">机器学习和深度学习有什么区别？</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="rag.js"></script>
+    <script>
+        // 初始化 RAG 系统
+        const rag = new SimpleRAG();
+        let isInitialized = false;
+        let isProcessing = false;
+        
+        // DOM 元素
+        const chatArea = document.getElementById('chatArea');
+        const queryInput = document.getElementById('queryInput');
+        const sendBtn = document.getElementById('sendBtn');
+        const statusDot = document.getElementById('statusDot');
+        const statusText = document.getElementById('statusText');
+        
+        // 初始化系统
+        async function initSystem() {
+            try {
+                await rag.initialize();
+                isInitialized = true;
+                statusDot.classList.add('ready');
+                statusText.textContent = '系统就绪，可以开始提问！';
+            } catch (error) {
+                statusText.textContent = '初始化失败: ' + error.message;
+                console.error(error);
+            }
+        }
+        
+        // 添加消息到聊天区域
+        function addMessage(content, isUser, sources = null) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isUser ? 'user' : 'bot'}`;
+            
+            let html = `<span class="avatar">${isUser ? '👤' : '🤖'}</span>`;
+            html += `<div class="bubble">${content}</div>`;
+            
+            if (!isUser && sources && sources.length > 0) {
+                html += `<div class="sources">
+                    <h4>📚 参考文档</h4>`;
+                sources.forEach((source, index) => {
+                    html += `<div class="source-item">
+                        <div class="source-title">${index + 1}. ${source.title}</div>
+                        <div class="source-content">${source.content.substring(0, 100)}...</div>
+                        <span class="source-similarity">相似度: ${(source.similarity * 100).toFixed(1)}%</span>
+                    </div>`;
+                });
+                html += `</div>`;
+            }
+            
+            messageDiv.innerHTML = html;
+            chatArea.appendChild(messageDiv);
+            chatArea.scrollTop = chatArea.scrollHeight;
+        }
+        
+        // 发送消息
+        async function sendMessage() {
+            const query = queryInput.value.trim();
+            if (!query || isProcessing || !isInitialized) return;
+            
+            // 显示用户问题
+            addMessage(query, true);
+            queryInput.value = '';
+            
+            // 设置处理状态
+            isProcessing = true;
+            sendBtn.disabled = true;
+            sendBtn.textContent = '思考中...';
+            
+            // 添加加载消息
+            const loadingDiv = document.createElement('div');
+            loadingDiv.className = 'message bot';
+            loadingDiv.innerHTML = `<span class="avatar">🤖</span><div class="bubble loading">正在检索相关内容</div>`;
+            chatArea.appendChild(loadingDiv);
+            chatArea.scrollTop = chatArea.scrollHeight;
+            
+            try {
+                // 调用 RAG 查询
+                const result = await rag.query(query, 3);
+                
+                // 移除加载消息
+                loadingDiv.remove();
+                
+                // 显示回答
+                addMessage(result.answer, false, result.sources);
+            } catch (error) {
+                loadingDiv.remove();
+                addMessage('抱歉，处理您的问题时出现错误: ' + error.message, false);
+            }
+            
+            // 恢复状态
+            isProcessing = false;
+            sendBtn.disabled = false;
+            sendBtn.textContent = '发送';
+        }
+        
+        // 点击示例问题
+        function askSample(question) {
+            if (!isInitialized || isProcessing) return;
+            queryInput.value = question;
+            sendMessage();
+        }
+        
+        // 回车发送
+        queryInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+        
+        // 页面加载时初始化
+        window.addEventListener('DOMContentLoaded', initSystem);
+    </script>
+</body>
+</html>

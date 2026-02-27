@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>倒计时</title>
+  <style>
+    body{font-family:sans-serif;display:flex;justify-content:center;align-items:center;min-height:100vh;background:#0f172a}
+    .card{background:white;padding:2rem;border-radius:12px;text-align:center}
+    input{padding:10px;font-size:24px;width:80px;text-align:center;border:2px solid #3b82f6;border-radius:8px}
+    button{padding:10px 20px;background:#3b82f6;color:white;border:none;border-radius:8px;cursor:pointer;margin:5px}
+    #timer{font-size:48px;font-weight:bold;color:#1e293b;margin:1rem 0}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>⏰ 倒计时</h2>
+    <input type="number" id="min" placeholder="分" value="5"> 分
+    <br>
+    <button onclick="start()">开始</button>
+    <button onclick="stop()">停止</button>
+    <button onclick="reset()">重置</button>
+    <div id="timer">05:00</div>
+  </div>
+  <script>
+    let interval;
+    let seconds=300;
+    function update(){
+      const m=Math.floor(seconds/60).toString().padStart(2,'0');
+      const s=(seconds%60).toString().padStart(2,'0');
+      document.getElementById('timer').innerText=m+':'+s;
+    }
+    function start(){
+      seconds=parseInt(document.getElementById('min').value)*60;
+      update();
+      if(interval)clearInterval(interval);
+      interval=setInterval(()=>{seconds--;update();if(seconds<=0)clearInterval(interval);},1000);
+    }
+    function stop(){clearInterval(interval)}
+    function reset(){stop();seconds=parseInt(document.getElementById('min').value)*60;update()}
+  </script>
+</body>
+</html>

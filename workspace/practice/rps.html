@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>石头剪刀布</title>
+  <style>
+    body{font-family:sans-serif;display:flex;justify-content:center;align-items:center;min-height:100vh;background:linear-gradient(135deg,#667eea,#764ba2)}
+    .game{background:white;padding:2rem;border-radius:16px;text-align:center}
+    .buttons{display:flex;gap:1rem;justify-content:center;margin:1rem 0}
+    button{padding:1rem 1.5rem;font-size:2rem;border:none;border-radius:12px;cursor:pointer;transition:0.2s}
+    button:hover{transform:scale(1.1)}
+    #result{font-size:1.5rem;font-weight:bold;margin:1rem 0;min-height:40px}
+  </style>
+</head>
+<body>
+  <div class="game">
+    <h1>🪨📄✂️ 石头剪刀布</h1>
+    <div class="buttons">
+      <button onclick="play('🪨')">🪨</button>
+      <button onclick="play('📄')">📄</button>
+      <button onclick="play('✂️')">✂️</button>
+    </div>
+    <div id="result">选择你的出拳</div>
+    <div id="score" style="color:#64748b">得分: 0</div>
+  </div>
+  <script>
+    let score=0;
+    const choices=['🪨','📄','✂️'];
+    function play(user){
+      const comp=choices[Math.floor(Math.random()*3)];
+      let result;
+      if(user===comp)result='平局！';
+      else if((user==='🪨'&&comp==='✂️')||(user==='📄'&&comp==='🪨')||(user==='✂️'&&comp==='📄')){result='你赢了！🎉';score++;}
+      else{result='你输了！😢';score--;}
+      document.getElementById('result').innerText=`你: ${user} vs 电脑: ${comp}\n${result}`;
+      document.getElementById('score').innerText=`得分: ${score}`;
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>番茄钟</title>
+  <style>
+    body{font-family:sans-serif;display:flex;justify-content:center;align-items:center;min-height:100vh;background:linear-gradient(135deg,#f093fb,#f5576c)}
+    .card{background:white;padding:2rem;border-radius:16px;text-align:center;width:300px}
+    .timer{font-size:4rem;font-weight:bold;color:#333;margin:1rem 0}
+    .btn{padding:1rem 2rem;margin:0.5rem;border:none;border-radius:8px;font-size:1rem;cursor:pointer}
+    .start{background:#10b981;color:white}
+    .stop{background:#ef4444;color:white}
+    .reset{background:#64748b;color:white}
+    .tasks{margin-top:1rem;text-align:left}
+    .task{display:flex;justify-content:space-between;padding:0.5rem;border-bottom:1px solid #eee}
+    .task.done{text-decoration:line-through;color:#999}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>🍅 番茄钟</h2>
+    <div class="timer" id="timer">25:00</div>
+    <div>
+      <button class="btn start" onclick="start()">开始</button>
+      <button class="btn stop" onclick="stop()">暂停</button>
+      <button class="btn reset" onclick="reset()">重置</button>
+    </div>
+    <div class="tasks">
+      <h4>待办</h4>
+      <div id="taskList"></div>
+      <input id="newTask" placeholder="新任务" style="width:60%;padding:0.5rem;margin-top:0.5rem">
+      <button onclick="addTask()" style="padding:0.5rem">+</button>
+    </div>
+  </div>
+  <script>
+    let time=1500,interval=null,run=false;
+    function update(){
+      const m=String(Math.floor(time/60)).padStart(2,'0');
+      const s=String(time%60).padStart(2,'0');
+      document.getElementById('timer').innerText=`${m}:${s}`;
+    }
+    function start(){
+      if(run)return;run=true;
+      interval=setInterval(()=>{if(time>0){time--;update();}else{stop();alert('时间到！')}},1000);
+    }
+    function stop(){clearInterval(interval);run=false;}
+    function reset(){stop();time=1500;update();}
+    let tasks=JSON.parse(localStorage.getItem('pomodoroTasks')||'[]');
+    function render(){
+      document.getElementById('taskList').innerHTML=tasks.map((t,i)=>`<div class="task ${t.done?'done':''}"><span onclick="toggle(${i})">${t.name}</span><button onclick="del(${i})" style="background:none;border:none;cursor:pointer;color:red">×</button></div>`).join('');
+      localStorage.setItem('pomodoroTasks',JSON.stringify(tasks));
+    }
+    function addTask(){
+      const v=document.getElementById('newTask').value.trim();
+      if(v){tasks.push({name:v,done:false});document.getElementById('newTask').value='';render();}
+    }
+    function toggle(i){tasks[i].done=!tasks[i].done;render();}
+    function del(i){tasks.splice(i,1);render();}
+    render();
+  </script>
+</body>
+</html>

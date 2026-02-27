@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>天气新闻聚合</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .card {
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.95);
+        }
+        .weather-icon {
+            font-size: 4rem;
+        }
+        .loading {
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+    </style>
+</head>
+<body>
+    <div id="app" class="container mx-auto px-4 py-8 max-w-4xl">
+        <!-- 标题 -->
+        <div class="text-center mb-8">
+            <h1 class="text-4xl font-bold text-white mb-2">🌤️ 天气新闻聚合</h1>
+            <p class="text-white opacity-80">实时天气 + 科技资讯</p>
+        </div>
+
+        <!-- 城市选择 -->
+        <div class="flex justify-center mb-6">
+            <select v-model="selectedCity" @change="fetchWeather" 
+                    class="px-4 py-2 rounded-lg border-0 shadow-lg focus:ring-2 focus:ring-purple-500">
+                <option value="Nanning">南宁</option>
+                <option value="Beijing">北京</option>
+                <option value="Shanghai">上海</option>
+                <option value="Guangzhou">广州</option>
+                <option value="Shenzhen">深圳</option>
+            </select>
+        </div>
+
+        <!-- 天气卡片 -->
+        <div class="card rounded-2xl shadow-2xl p-6 mb-6">
+            <h2 class="text-2xl font-bold mb-4 text-gray-800">🌤️ {{ weather.city }} 天气</h2>
+            
+            <div v-if="loading" class="loading text-center py-8">
+                <p class="text-gray-500">加载中...</p>
+            </div>
+            
+            <div v-else-if="weather.current">
+                <!-- 当前天气 -->
+                <div class="flex items-center justify-center mb-6">
+                    <span class="weather-icon">{{ getWeatherEmoji(weather.current.weather_code) }}</span>
+                    <div class="ml-4">
+                        <p class="text-5xl font-bold text-gray-800">{{ weather.current.temp }}°C</p>
+                        <p class="text-gray-600">{{ weather.current.weather }}</p>
+                    </div>
+                </div>
+                
+                <!-- 天气详情 -->
+                <div class="grid grid-cols-2 gap-4 mb-6">
+                    <div class="bg-purple-100 rounded-lg p-4 text-center">
+                        <p class="text-sm text-gray-600">湿度</p>
+                        <p class="text-xl font-bold text-purple-600">{{ weather.current.humidity }}%</p>
+                    </div>
+                    <div class="bg-blue-100 rounded-lg p-4 text-center">
+                        <p class="text-sm text-gray-600">风速</p>
+                        <p class="text-xl font-bold text-blue-600">{{ weather.current.wind_speed }} km/h</p>
+                    </div>
+                </div>
+                
+                <!-- 预报 -->
+                <h3 class="text-lg font-semibold mb-3 text-gray-700">📅 3天预报</h3>
+                <div class="grid grid-cols-3 gap-3">
+                    <div v-for="day in weather.forecast" :key="day.date" 
+                         class="bg-gradient-to-br from-purple-50 to-blue-50 rounded-xl p-3 text-center">
+                        <p class="text-sm text-gray-600">{{ formatDate(day.date) }}</p>
+                        <p class="text-2xl my-2">{{ getWeatherEmojiByName(day.weather) }}</p>
+                        <p class="text-sm">
+                            <span class="text-red-500">{{ day.temp_max }}°</span>
+                            <span class="text-gray-400"> / </span>
+                            <span class="text-blue-500">{{ day.temp_min }}°</span>
+                        </p>
+                    </div>
+                </div>
+                
+                <p class="text-xs text-gray-400 text-right mt-4">更新时间: {{ weather.update_time }}</p>
+            </div>
+        </div>
+
+        <!-- 新闻卡片 -->
+        <div class="card rounded-2xl shadow-2xl p-6">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-2xl font-bold text-gray-800">📰 科技资讯</h2>
+                <select v-model="newsCategory" @change="fetchNews"
+                        class="px-3 py-1 rounded border border-gray-200 text-sm">
+                    <option value="technology">科技</option>
+                    <option value="business">商业</option>
+                    <option value="sports">体育</option>
+                    <option value="entertainment">娱乐</option>
+                </select>
+            </div>
+            
+            <div v-if="newsLoading" class="loading text-center py-8">
+                <p class="text-gray-500">加载中...</p>
+            </div>
+            
+            <div v-else-if="news.articles && news.articles.length > 0">
+                <div v-for="(article, index) in news.articles" :key="index"
+                     class="border-b border-gray-100 py-4 last:border-0">
+                    <a :href="article.url" target="_blank" class="block hover:bg-gray-50 rounded-lg p-2 -m-2 transition">
+                        <h3 class="font-semibold text-gray-800 mb-1 hover:text-purple-600">{{ article.title }}</h3>
+                        <p class="text-sm text-gray-500 mb-2">{{ article.description }}</p>
+                        <div class="flex justify-between text-xs text-gray-400">
+                            <span>{{ article.source }}</span>
+                            <span>{{ article.pubDate }}</span>
+                        </div>
+                    </a>
+                </div>
+                <p class="text-xs text-gray-400 text-right mt-4">更新时间: {{ news.update_time }}</p>
+            </div>
+            
+            <div v-else class="text-center py-8 text-gray-500">
+                <p>暂无新闻数据</p>
+            </div>
+        </div>
+
+        <!-- 页脚 -->
+        <div class="text-center mt-8 text-white opacity-60 text-sm">
+            <p>Powered by Open-Meteo API + Vue 3</p>
+        </div>
+    </div>
+
+    <script>
+        const { createApp, ref, onMounted } = Vue;
+
+        createApp({
+            setup() {
+                const selectedCity = ref('Nanning');
+                const newsCategory = ref('technology');
+                const weather = ref({});
+                const news = ref({});
+                const loading = ref(false);
+                const newsLoading = ref(false);
+
+                const fetchWeather = async () => {
+                    loading.value = true;
+                    try {
+                        const response = await fetch(`http://localhost:8000/weather?city=${selectedCity.value}`);
+                        weather.value = await response.json();
+                    } catch (error) {
+                        console.error('获取天气失败:', error);
+                    }
+                    loading.value = false;
+                };
+
+                const fetchNews = async () => {
+                    newsLoading.value = true;
+                    try {
+                        const response = await fetch(`http://localhost:8000/news?category=${newsCategory.value}`);
+                        news.value = await response.json();
+                    } catch (error) {
+                        console.error('获取新闻失败:', error);
+                    }
+                    newsLoading.value = false;
+                };
+
+                const getWeatherEmoji = (code) => {
+                    const codes = {
+                        0: '☀️', 1: '⛅', 2: '⛅', 3: '☁️',
+                        45: '🌫️', 48: '🌫️',
+                        51: '🌧️', 53: '🌧️', 55: '🌧️',
+                        61: '🌧️', 63: '🌧️', 65: '🌧️',
+                        71: '🌨️', 73: '🌨️', 75: '🌨️',
+                        80: '🌦️', 81: '🌦️', 82: '🌦️',
+                        95: '⛈️',
+                    };
+                    return codes[code] || '🌤️';
+                };
+
+                const getWeatherEmojiByName = (name) => {
+                    if (name.includes('晴')) return '☀️';
+                    if (name.includes('多云')) return '⛅';
+                    if (name.includes('阴')) return '☁️';
+                    if (name.includes('雨')) return '🌧️';
+                    if (name.includes('雪')) return '🌨️';
+                    if (name.includes('雾')) return '🌫️';
+                    if (name.includes('雷')) return '⛈️';
+                    return '🌤️';
+                };
+
+                const formatDate = (dateStr) => {
+                    const date = new Date(dateStr);
+                    const weekdays = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
+                    return `${date.getMonth() + 1}/${date.getDate()} ${weekdays[date.getDay()]}`;
+                };
+
+                onMounted(() => {
+                    fetchWeather();
+                    fetchNews();
+                });
+
+                return {
+                    selectedCity,
+                    newsCategory,
+                    weather,
+                    news,
+                    loading,
+                    newsLoading,
+                    fetchWeather,
+                    fetchNews,
+                    getWeatherEmoji,
+                    getWeatherEmojiByName,
+                    formatDate
+                };
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>

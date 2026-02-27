@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>单位转换器</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, sans-serif; min-height: 100vh; display: flex; justify-content: center; align-items: center; background: #f5f5f5; }
+    .container { background: white; padding: 2rem; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); width: 400px; }
+    h1 { text-align: center; margin-bottom: 1.5rem; color: #2563eb; }
+    .converter { margin-bottom: 1rem; }
+    label { display: block; margin-bottom: 0.5rem; font-weight: 500; color: #374151; }
+    input, select { width: 100%; padding: 0.75rem; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 1rem; margin-bottom: 0.5rem; }
+    .result { padding: 1rem; background: #eff6ff; border-radius: 8px; color: #2563eb; font-weight: 600; text-align: center; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>📐 单位转换器</h1>
+    <div class="converter">
+      <label>类型</label>
+      <select id="type" onchange="convert()">
+        <option value="length">长度</option>
+        <option value="weight">重量</option>
+        <option value="temp">温度</option>
+        <option value="data">数据</option>
+      </select>
+      <label>输入值</label>
+      <input type="number" id="input" placeholder="输入数值" oninput="convert()">
+      <label>从</label>
+      <select id="from" onchange="convert()"></select>
+      <label>到</label>
+      <select id="to" onchange="convert()"></select>
+      <div class="result" id="result">结果将显示在这里</div>
+    </div>
+  </div>
+  <script>
+    const units = {
+      length: ['米', '厘米', '毫米', '千米', '英寸', '英尺'],
+      weight: ['千克', '克', '毫克', '磅', '盎司'],
+      temp: ['摄氏度', '华氏度', '开尔文'],
+      data: ['字节', 'KB', 'MB', 'GB', 'TB']
+    };
+    const factors = {
+      length: [1, 0.01, 0.001, 1000, 0.0254, 0.3048],
+      weight: [1, 0.001, 0.000001, 0.453592, 0.0283495],
+      data: [1, 1024, 1048576, 1073741824, 1099511627776]
+    };
+    function convert() {
+      const type = document.getElementById('type').value;
+      const val = parseFloat(document.getElementById('input').value);
+      const from = document.getElementById('from').value;
+      const to = document.getElementById('to').value;
+      const resultEl = document.getElementById('result');
+      if (isNaN(val)) { resultEl.textContent = '请输入数值'; return; }
+      if (type === 'temp') {
+        let celsius = from === '摄氏度' ? val : from === '华氏度' ? (val - 32) * 5/9 : val - 273.15;
+        let result = to === '摄氏度' ? celsius : to === '华氏度' ? celsius * 9/5 + 32 : celsius + 273.15;
+        resultEl.textContent = `${val} ${from} = ${result.toFixed(2)} ${to}`;
+      } else {
+        const idx1 = units[type].indexOf(from), idx2 = units[type].indexOf(to);
+        const result = val * factors[type][idx1] / factors[type][idx2];
+        resultEl.textContent = `${val} ${from} = ${result.toFixed(4)} ${to}`;
+      }
+    }
+    function updateUnits() {
+      const type = document.getElementById('type').value;
+      const from = document.getElementById('from'), to = document.getElementById('to');
+      from.innerHTML = units[type].map(u => `<option value="${u}">${u}</option>`).join('');
+      to.innerHTML = units[type].map(u => `<option value="${u}" ${units[type].indexOf(u) === 1 ? 'selected' : ''}>${u}</option>`).join('');
+      convert();
+    }
+    document.getElementById('type').addEventListener('change', updateUnits);
+    updateUnits();
+  </script>
+</body>
+</html>

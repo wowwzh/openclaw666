@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>点击特效</title>
+  <style>
+    body{ margin:0; overflow:hidden; background:#111; cursor:crosshair }
+    .ripple{ position:absolute; border-radius:50%; background:radial-gradient(circle,rgba(255,255,255,0.8),transparent); pointer-events:none; animation:ripple 0.6s ease-out forwards }
+    @keyframes ripple{ 0%{width:0;height:0;opacity:1} 100%{width:200px;height:200px;margin:-100px;opacity:0} }
+    .emoji{ position:absolute; font-size:24px; pointer-events:none; animation:float 1s ease-out forwards }
+    @keyframes float{ 0%{opacity:1;transform:translateY(0)scale(1)} 100%{opacity:0;transform:translateY(-100px)scale(1.5)} }
+    h1{position:fixed;top:20px;left:50%;transform:translateX(-50%);color:#666;font-size:14px;font-weight:normal}
+  </style>
+</head>
+<body>
+  <h1>点击屏幕产生特效</h1>
+  <script>
+    document.addEventListener('click',e=>{
+      const r=document.createElement('div');
+      r.className='ripple';
+      r.style.left=e.clientX+'px';
+      r.style.top=e.clientY+'px';
+      document.body.appendChild(r);
+      setTimeout(()=>r.remove(),600);
+      const emojis=['✨','💫','🌟','⭐','💥'];
+      const emoji=document.createElement('div');
+      emoji.className='emoji';
+      emoji.textContent=emojis[Math.floor(Math.random()*emojis.length)];
+      emoji.style.left=e.clientX+'px';
+      emoji.style.top=e.clientY+'px';
+      document.body.appendChild(emoji);
+      setTimeout(()=>emoji.remove(),1000);
+    });
+  </script>
+</body>
+</html>

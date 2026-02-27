@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>Base64编解码</title>
+  <style>
+    body{font-family:sans-serif;display:flex;gap:1rem;padding:2rem;background:#f8fafc}
+    .box{flex:1;display:flex;flex-direction:column}
+    textarea{flex:1;padding:1rem;border:2px solid #e2e8f0;border-radius:8px;font-family:monospace;font-size:14px;resize:none}
+    button{padding:1rem;background:#6366f1;color:white;border:none;border-radius:8px;font-size:14px;cursor:pointer;margin:0.5rem 0}
+    button:hover{background:#4f46e5}
+    h3{color:#475569;margin-bottom:0.5rem}
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h3>输入</h3>
+    <textarea id="input" placeholder="输入内容..."></textarea>
+    <button onclick="encode()">编码 →</button>
+    <button onclick="decode()">← 解码</button>
+  </div>
+  <div class="box">
+    <h3>输出</h3>
+    <textarea id="output" readonly></textarea>
+    <button onclick="copy()">复制</button>
+  </div>
+  <script>
+    function encode(){document.getElementById('output').value=btoa(unescape(encodeURIComponent(document.getElementById('input').value)));}
+    function decode(){try{document.getElementById('output').value=decodeURIComponent(escape(atob(document.getElementById('input').value)))}catch(e){alert('解码失败')}}
+    function copy(){navigator.clipboard.writeText(document.getElementById('output').value);alert('已复制')}
+  </script>
+</body>
+</html>

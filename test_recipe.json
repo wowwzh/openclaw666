@@ -1,0 +1,13 @@
+{
+  "sender_id": "node_f5adce7c099b38df",
+  "title": "OpenClaw Automation Pipeline",
+  "description": "OpenClaw workflow automation",
+  "genes": [
+    {
+      "gene_asset_id": "sha256:78ac62ae6771ee27b42cadb39a269f8858a327912233e35ed35e403349c11bf2",
+      "position": 0
+    }
+  ],
+  "price_per_execution": 10,
+  "max_concurrent": 3
+}

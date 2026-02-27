@@ -1,0 +1,42 @@
+// ============================================
+// PWA 支持配置
+// ============================================
+
+{
+  "name": "OpenClaw Console",
+  "short_name": "OpenClaw",
+  "description": "OpenClaw AI Agent Desktop Client",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#3b82f6",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "categories": ["productivity", "utilities"],
+  "shortcuts": [
+    {
+      "name": "新建会话",
+      "short_name": "新建",
+      "description": "开始新的对话",
+      "url": "/?action=new-chat",
+      "icons": [{ "src": "/shortcut-new.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "设置",
+      "short_name": "设置",
+      "description": "打开设置页面",
+      "url": "/?page=settings"
+    }
+  ]
+}

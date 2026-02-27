@@ -1,0 +1,215 @@
+{"at":"2026-02-25T18:21:15.269Z","cycle":"0001","reason":"hand_attempt_1_failed","details":"spawn .npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-25T18:21:31.281Z","cycle":"0001","reason":"hand_attempt_2_failed","details":"spawn .npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-25T18:22:01.294Z","cycle":"0001","reason":"hand_attempt_3_failed","details":"spawn .npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-25T20:27:22.624Z","cycle":"0002","reason":"hand_attempt_1_failed","details":"spawn .npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-25T20:27:38.633Z","cycle":"0002","reason":"hand_attempt_2_failed","details":"spawn .npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-25T20:28:08.649Z","cycle":"0002","reason":"hand_attempt_3_failed","details":"spawn .npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-25T20:28:18.554Z","cycle":"0003","reason":"hand_attempt_1_failed","details":"spawn .npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-25T20:28:34.562Z","cycle":"0003","reason":"hand_attempt_2_failed","details":"spawn .npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-25T20:29:04.576Z","cycle":"0003","reason":"hand_attempt_3_failed","details":"spawn .npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-25T20:31:17.001Z","cycle":"0004","reason":"hand_attempt_1_failed","details":"spawn .npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-25T20:31:33.011Z","cycle":"0004","reason":"hand_attempt_2_failed","details":"spawn .npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-25T20:32:03.023Z","cycle":"0004","reason":"hand_attempt_3_failed","details":"spawn .npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-25T20:48:14.635Z","cycle":"0005","reason":"hand_attempt_1_failed","details":"spawn .npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-25T20:48:30.645Z","cycle":"0005","reason":"hand_attempt_2_failed","details":"spawn .npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-25T20:49:00.659Z","cycle":"0005","reason":"hand_attempt_3_failed","details":"spawn .npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-25T21:25:47.493Z","cycle":"0006","reason":"hand_attempt_1_failed","details":"spawn .npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-25T21:26:03.502Z","cycle":"0006","reason":"hand_attempt_2_failed","details":"spawn .npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-25T21:26:33.518Z","cycle":"0006","reason":"hand_attempt_3_failed","details":"spawn .npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-25T21:49:18.969Z","cycle":"0007","reason":"hand_attempt_1_failed","details":"spawn .npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-25T21:49:34.977Z","cycle":"0007","reason":"hand_attempt_2_failed","details":"spawn .npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-25T21:50:04.990Z","cycle":"0007","reason":"hand_attempt_3_failed","details":"spawn .npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-25T22:25:18.785Z","cycle":"0008","reason":"hand_attempt_1_failed","details":"spawn .npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-25T22:25:34.793Z","cycle":"0008","reason":"hand_attempt_2_failed","details":"spawn .npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-25T22:26:04.807Z","cycle":"0008","reason":"hand_attempt_3_failed","details":"spawn .npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-25T22:50:23.661Z","cycle":"0009","reason":"hand_attempt_1_failed","details":"spawn .npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-25T22:50:39.670Z","cycle":"0009","reason":"hand_attempt_2_failed","details":"spawn .npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-25T22:51:09.685Z","cycle":"0009","reason":"hand_attempt_3_failed","details":"spawn .npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-25T22:55:34.471Z","cycle":"0010","reason":"hand_attempt_1_failed","details":"spawn .npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-25T22:55:50.480Z","cycle":"0010","reason":"hand_attempt_2_failed","details":"spawn .npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-25T22:56:20.494Z","cycle":"0010","reason":"hand_attempt_3_failed","details":"spawn .npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-25T23:51:28.183Z","cycle":"0011","reason":"hand_attempt_1_failed","details":"spawn .npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-25T23:51:44.193Z","cycle":"0011","reason":"hand_attempt_2_failed","details":"spawn .npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-25T23:52:14.209Z","cycle":"0011","reason":"hand_attempt_3_failed","details":"spawn .npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-26T00:26:01.825Z","cycle":"0012","reason":"hand_attempt_1_failed","details":"spawn .npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-26T00:52:32.707Z","cycle":"0013","reason":"hand_attempt_1_failed","details":"spawn .npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-26T00:52:48.715Z","cycle":"0013","reason":"hand_attempt_2_failed","details":"spawn .npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-26T00:53:18.729Z","cycle":"0013","reason":"hand_attempt_3_failed","details":"spawn .npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-26T00:55:28.968Z","cycle":"0014","reason":"hand_attempt_1_failed","details":"spawn .npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-26T00:55:44.977Z","cycle":"0014","reason":"hand_attempt_2_failed","details":"spawn .npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-26T00:56:14.991Z","cycle":"0014","reason":"hand_attempt_3_failed","details":"spawn .npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-26T01:25:27.585Z","cycle":"0015","reason":"hand_attempt_1_failed","details":"spawn .npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-26T01:25:43.596Z","cycle":"0015","reason":"hand_attempt_2_failed","details":"spawn .npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-26T01:26:13.609Z","cycle":"0015","reason":"hand_attempt_3_failed","details":"spawn .npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-26T01:53:37.440Z","cycle":"0016","reason":"hand_attempt_1_failed","details":"spawn .npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-26T01:53:53.449Z","cycle":"0016","reason":"hand_attempt_2_failed","details":"spawn .npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-26T01:54:23.463Z","cycle":"0016","reason":"hand_attempt_3_failed","details":"spawn .npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-26T02:33:58.220Z","cycle":"0017","reason":"hand_attempt_1_failed","details":"spawn C:\\Users\\Administrator.WIN-V62R0KO083O\\.npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-26T02:34:14.231Z","cycle":"0017","reason":"hand_attempt_2_failed","details":"spawn C:\\Users\\Administrator.WIN-V62R0KO083O\\.npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-26T02:34:44.246Z","cycle":"0017","reason":"hand_attempt_3_failed","details":"spawn C:\\Users\\Administrator.WIN-V62R0KO083O\\.npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-26T02:35:06.115Z","cycle":"0018","reason":"hand_attempt_1_failed","details":"spawn C:\\Users\\Administrator.WIN-V62R0KO083O\\.npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-26T02:35:22.124Z","cycle":"0018","reason":"hand_attempt_2_failed","details":"spawn C:\\Users\\Administrator.WIN-V62R0KO083O\\.npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-26T02:35:52.138Z","cycle":"0018","reason":"hand_attempt_3_failed","details":"spawn C:\\Users\\Administrator.WIN-V62R0KO083O\\.npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-26T02:38:21.029Z","cycle":"0019","reason":"hand_attempt_1_failed","details":"spawn C:\\Users\\Administrator.WIN-V62R0KO083O\\.npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-26T02:38:37.039Z","cycle":"0019","reason":"hand_attempt_2_failed","details":"spawn C:\\Users\\Administrator.WIN-V62R0KO083O\\.npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-26T02:39:07.053Z","cycle":"0019","reason":"hand_attempt_3_failed","details":"spawn C:\\Users\\Administrator.WIN-V62R0KO083O\\.npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-26T02:54:37.511Z","cycle":"0020","reason":"hand_attempt_1_failed","details":"spawn .npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-26T02:54:53.520Z","cycle":"0020","reason":"hand_attempt_2_failed","details":"spawn .npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-26T02:55:23.532Z","cycle":"0020","reason":"hand_attempt_3_failed","details":"spawn .npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-26T02:55:29.877Z","cycle":"0021","reason":"hand_attempt_1_failed","details":"spawn C:\\Users\\Administrator.WIN-V62R0KO083O\\.npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-26T02:55:45.886Z","cycle":"0021","reason":"hand_attempt_2_failed","details":"spawn C:\\Users\\Administrator.WIN-V62R0KO083O\\.npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-26T02:56:15.899Z","cycle":"0021","reason":"hand_attempt_3_failed","details":"spawn C:\\Users\\Administrator.WIN-V62R0KO083O\\.npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-26T03:06:03.699Z","cycle":"0022","reason":"hand_attempt_1_failed","details":"spawn C:\\Users\\Administrator.WIN-V62R0KO083O\\.npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-26T03:06:19.712Z","cycle":"0022","reason":"hand_attempt_2_failed","details":"spawn C:\\Users\\Administrator.WIN-V62R0KO083O\\.npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-26T03:06:49.728Z","cycle":"0022","reason":"hand_attempt_3_failed","details":"spawn C:\\Users\\Administrator.WIN-V62R0KO083O\\.npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-26T03:07:07.590Z","cycle":"0023","reason":"hand_attempt_1_failed","details":"spawn C:\\Users\\Administrator.WIN-V62R0KO083O\\.npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-26T03:07:19.493Z","cycle":"0024","reason":"hand_attempt_1_failed","details":"spawn C:\\Users\\Administrator.WIN-V62R0KO083O\\.npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-26T03:07:23.600Z","cycle":"0023","reason":"hand_attempt_2_failed","details":"spawn C:\\Users\\Administrator.WIN-V62R0KO083O\\.npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-26T03:07:35.503Z","cycle":"0024","reason":"hand_attempt_2_failed","details":"spawn C:\\Users\\Administrator.WIN-V62R0KO083O\\.npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-26T03:07:53.614Z","cycle":"0023","reason":"hand_attempt_3_failed","details":"spawn C:\\Users\\Administrator.WIN-V62R0KO083O\\.npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-26T03:08:05.520Z","cycle":"0024","reason":"hand_attempt_3_failed","details":"spawn C:\\Users\\Administrator.WIN-V62R0KO083O\\.npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-26T03:08:58.963Z","cycle":"0025","reason":"hand_attempt_1_failed","details":"spawn C:\\Users\\Administrator.WIN-V62R0KO083O\\.npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-26T03:09:14.976Z","cycle":"0025","reason":"hand_attempt_2_failed","details":"spawn C:\\Users\\Administrator.WIN-V62R0KO083O\\.npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-26T03:09:44.991Z","cycle":"0025","reason":"hand_attempt_3_failed","details":"spawn C:\\Users\\Administrator.WIN-V62R0KO083O\\.npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-26T03:10:14.997Z","cycle":"0026","reason":"hand_attempt_1_failed","details":"spawn C:\\Users\\Administrator.WIN-V62R0KO083O\\.npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-26T03:10:16.076Z","cycle":"0027","reason":"hand_attempt_1_failed","details":"spawn C:\\Users\\Administrator.WIN-V62R0KO083O\\.npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-26T03:10:31.006Z","cycle":"0026","reason":"hand_attempt_2_failed","details":"spawn C:\\Users\\Administrator.WIN-V62R0KO083O\\.npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-26T03:10:32.086Z","cycle":"0027","reason":"hand_attempt_2_failed","details":"spawn C:\\Users\\Administrator.WIN-V62R0KO083O\\.npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-26T03:11:01.022Z","cycle":"0026","reason":"hand_attempt_3_failed","details":"spawn C:\\Users\\Administrator.WIN-V62R0KO083O\\.npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-26T03:11:02.100Z","cycle":"0027","reason":"hand_attempt_3_failed","details":"spawn C:\\Users\\Administrator.WIN-V62R0KO083O\\.npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-26T03:13:32.001Z","cycle":"0028","reason":"hand_attempt_1_failed","details":"spawn C:\\Users\\Administrator.WIN-V62R0KO083O\\.npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-26T03:13:48.011Z","cycle":"0028","reason":"hand_attempt_2_failed","details":"spawn C:\\Users\\Administrator.WIN-V62R0KO083O\\.npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-26T03:14:18.025Z","cycle":"0028","reason":"hand_attempt_3_failed","details":"spawn C:\\Users\\Administrator.WIN-V62R0KO083O\\.npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-26T03:27:26.017Z","cycle":"0029","reason":"hand_attempt_1_failed","details":"spawn C:\\Users\\Administrator.WIN-V62R0KO083O\\.npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-26T03:27:42.027Z","cycle":"0029","reason":"hand_attempt_2_failed","details":"spawn C:\\Users\\Administrator.WIN-V62R0KO083O\\.npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-26T03:28:12.041Z","cycle":"0029","reason":"hand_attempt_3_failed","details":"spawn C:\\Users\\Administrator.WIN-V62R0KO083O\\.npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-26T03:30:47.668Z","cycle":"0030","reason":"hand_attempt_1_failed","details":"spawn C:\\Users\\Administrator.WIN-V62R0KO083O\\.npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-26T03:31:03.676Z","cycle":"0030","reason":"hand_attempt_2_failed","details":"spawn C:\\Users\\Administrator.WIN-V62R0KO083O\\.npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-26T03:31:33.691Z","cycle":"0030","reason":"hand_attempt_3_failed","details":"spawn C:\\Users\\Administrator.WIN-V62R0KO083O\\.npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-26T03:55:42.887Z","cycle":"0031","reason":"hand_attempt_1_failed","details":"spawn .npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-26T03:55:58.897Z","cycle":"0031","reason":"hand_attempt_2_failed","details":"spawn .npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-26T03:56:28.910Z","cycle":"0031","reason":"hand_attempt_3_failed","details":"spawn .npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-26T03:56:39.437Z","cycle":"0032","reason":"hand_attempt_1_failed","details":"spawn C:\\Users\\Administrator.WIN-V62R0KO083O\\.npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-26T03:56:55.446Z","cycle":"0032","reason":"hand_attempt_2_failed","details":"spawn C:\\Users\\Administrator.WIN-V62R0KO083O\\.npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-26T03:57:25.460Z","cycle":"0032","reason":"hand_attempt_3_failed","details":"spawn C:\\Users\\Administrator.WIN-V62R0KO083O\\.npm-global\\bin\\openclaw ENOENT"}
+{"at":"2026-02-26T04:07:17.819Z","cycle":"0033","reason":"hand_attempt_1_failed","details":"spawn npx openclaw ENOENT"}
+{"at":"2026-02-26T04:07:33.831Z","cycle":"0033","reason":"hand_attempt_2_failed","details":"spawn npx openclaw ENOENT"}
+{"at":"2026-02-26T04:08:03.846Z","cycle":"0033","reason":"hand_attempt_3_failed","details":"spawn npx openclaw ENOENT"}
+{"at":"2026-02-26T04:09:07.091Z","cycle":"0034","reason":"hand_attempt_1_failed","details":"spawn npx openclaw ENOENT"}
+{"at":"2026-02-26T04:09:23.102Z","cycle":"0034","reason":"hand_attempt_2_failed","details":"spawn npx openclaw ENOENT"}
+{"at":"2026-02-26T04:09:53.118Z","cycle":"0034","reason":"hand_attempt_3_failed","details":"spawn npx openclaw ENOENT"}
+{"at":"2026-02-26T04:10:15.651Z","cycle":"0035","reason":"hand_attempt_1_failed","details":"spawn npx openclaw ENOENT"}
+{"at":"2026-02-26T04:10:31.661Z","cycle":"0035","reason":"hand_attempt_2_failed","details":"spawn npx openclaw ENOENT"}
+{"at":"2026-02-26T04:11:01.676Z","cycle":"0035","reason":"hand_attempt_3_failed","details":"spawn npx openclaw ENOENT"}
+{"at":"2026-02-26T04:13:31.845Z","cycle":"0036","reason":"hand_attempt_1_failed","details":"spawn npx openclaw ENOENT"}
+{"at":"2026-02-26T04:13:47.854Z","cycle":"0036","reason":"hand_attempt_2_failed","details":"spawn npx openclaw ENOENT"}
+{"at":"2026-02-26T04:14:17.870Z","cycle":"0036","reason":"hand_attempt_3_failed","details":"spawn npx openclaw ENOENT"}
+{"at":"2026-02-26T04:27:27.608Z","cycle":"0037","reason":"hand_attempt_1_failed","details":"spawn npx openclaw ENOENT"}
+{"at":"2026-02-26T04:27:43.621Z","cycle":"0037","reason":"hand_attempt_2_failed","details":"spawn npx openclaw ENOENT"}
+{"at":"2026-02-26T04:27:45.250Z","cycle":"0038","reason":"hand_attempt_1_failed","details":"spawn npx openclaw ENOENT"}
+{"at":"2026-02-26T04:28:01.260Z","cycle":"0038","reason":"hand_attempt_2_failed","details":"spawn npx openclaw ENOENT"}
+{"at":"2026-02-26T04:28:13.636Z","cycle":"0037","reason":"hand_attempt_3_failed","details":"spawn npx openclaw ENOENT"}
+{"at":"2026-02-26T04:28:28.516Z","cycle":"0039","reason":"hand_attempt_1_failed","details":"spawn npx openclaw ENOENT"}
+{"at":"2026-02-26T04:28:31.275Z","cycle":"0038","reason":"hand_attempt_3_failed","details":"spawn npx openclaw ENOENT"}
+{"at":"2026-02-26T04:28:33.364Z","cycle":"0040","reason":"hand_attempt_1_failed","details":"spawn npx openclaw ENOENT"}
+{"at":"2026-02-26T04:28:44.524Z","cycle":"0039","reason":"hand_attempt_2_failed","details":"spawn npx openclaw ENOENT"}
+{"at":"2026-02-26T04:28:45.814Z","cycle":"0041","reason":"hand_attempt_1_failed","details":"spawn npx openclaw ENOENT"}
+{"at":"2026-02-26T04:28:49.375Z","cycle":"0040","reason":"hand_attempt_2_failed","details":"spawn npx openclaw ENOENT"}
+{"at":"2026-02-26T04:29:01.823Z","cycle":"0041","reason":"hand_attempt_2_failed","details":"spawn npx openclaw ENOENT"}
+{"at":"2026-02-26T04:29:14.539Z","cycle":"0039","reason":"hand_attempt_3_failed","details":"spawn npx openclaw ENOENT"}
+{"at":"2026-02-26T04:29:19.391Z","cycle":"0040","reason":"hand_attempt_3_failed","details":"spawn npx openclaw ENOENT"}
+{"at":"2026-02-26T04:29:31.837Z","cycle":"0041","reason":"hand_attempt_3_failed","details":"spawn npx openclaw ENOENT"}
+{"at":"2026-02-26T04:29:37.103Z","cycle":"0042","reason":"hand_attempt_1_failed","details":"spawn npx openclaw ENOENT"}
+{"at":"2026-02-26T04:29:53.113Z","cycle":"0042","reason":"hand_attempt_2_failed","details":"spawn npx openclaw ENOENT"}
+{"at":"2026-02-26T04:30:08.835Z","cycle":"0043","reason":"hand_attempt_1_failed","details":"spawn npx openclaw ENOENT"}
+{"at":"2026-02-26T04:30:23.129Z","cycle":"0042","reason":"hand_attempt_3_failed","details":"spawn npx openclaw ENOENT"}
+{"at":"2026-02-26T04:30:24.846Z","cycle":"0043","reason":"hand_attempt_2_failed","details":"spawn npx openclaw ENOENT"}
+{"at":"2026-02-26T04:30:54.860Z","cycle":"0043","reason":"hand_attempt_3_failed","details":"spawn npx openclaw ENOENT"}
+{"at":"2026-02-26T04:32:53.812Z","cycle":"0045","reason":"hand_attempt_1_failed","details":"spawn openclaw ENOENT"}
+{"at":"2026-02-26T04:33:09.825Z","cycle":"0045","reason":"hand_attempt_2_failed","details":"spawn openclaw ENOENT"}
+{"at":"2026-02-26T04:33:39.844Z","cycle":"0045","reason":"hand_attempt_3_failed","details":"spawn openclaw ENOENT"}
+{"at":"2026-02-26T04:33:42.612Z","cycle":"0046","reason":"hand_attempt_1_failed","details":"spawn node D:\\OpenClaw\\.openclaw\\openclaw\\openclaw.mjs ENOENT"}
+{"at":"2026-02-26T04:33:58.626Z","cycle":"0046","reason":"hand_attempt_2_failed","details":"spawn node D:\\OpenClaw\\.openclaw\\openclaw\\openclaw.mjs ENOENT"}
+{"at":"2026-02-26T04:34:01.659Z","cycle":"0047","reason":"hand_attempt_1_failed","details":"spawn openclaw ENOENT"}
+{"at":"2026-02-26T04:34:17.668Z","cycle":"0047","reason":"hand_attempt_2_failed","details":"spawn openclaw ENOENT"}
+{"at":"2026-02-26T04:34:28.640Z","cycle":"0046","reason":"hand_attempt_3_failed","details":"spawn node D:\\OpenClaw\\.openclaw\\openclaw\\openclaw.mjs ENOENT"}
+{"at":"2026-02-26T04:37:16.146Z","cycle":"0049","reason":"hand_attempt_1_failed","details":"code=1; solidify_failed=false; solidify_success=false; status_file=false\n\n������̫����\r\n"}
+{"at":"2026-02-26T04:37:32.207Z","cycle":"0049","reason":"hand_attempt_2_failed","details":"code=1; solidify_failed=false; solidify_success=false; status_file=false\n\n������̫����\r\n"}
+{"at":"2026-02-26T04:38:02.285Z","cycle":"0049","reason":"hand_attempt_3_failed","details":"code=1; solidify_failed=false; solidify_success=false; status_file=false\n\n������̫����\r\n"}
+{"at":"2026-02-26T04:38:23.654Z","cycle":"0050","reason":"hand_attempt_1_failed","details":"code=1; solidify_failed=false; solidify_success=false; status_file=false\n\n������̫����\r\n"}
+{"at":"2026-02-27T01:03:48.213Z","cycle":"0315","reason":"wrapper_cycle_failed","details":"Child process exited with code 3221225786"}
+{"at":"2026-02-27T02:01:59.583Z","cycle":"0342","reason":"wrapper_cycle_failed","details":"Child process exited with code 3221225786"}
+{"at":"2026-02-27T02:05:42.569Z","cycle":"0344","reason":"wrapper_cycle_failed","details":"Child process exited with code 3221225786"}
+{"at":"2026-02-27T02:23:07.465Z","cycle":"0353","reason":"wrapper_cycle_failed","details":"Child process exited with code 3221225786"}
+{"at":"2026-02-27T02:23:08.161Z","cycle":"0352","reason":"wrapper_cycle_failed","details":"Child process exited with code 3221225786"}
+{"at":"2026-02-27T02:23:08.759Z","cycle":"0351","reason":"wrapper_cycle_failed","details":"Child process exited with code 3221225786"}
+{"at":"2026-02-27T02:26:36.778Z","cycle":"0353","reason":"wrapper_cycle_failed","details":"Child process exited with code 3221225786"}
+{"at":"2026-02-27T02:26:37.506Z","cycle":"0352","reason":"wrapper_cycle_failed","details":"Child process exited with code 3221225786"}
+{"at":"2026-02-27T02:26:38.108Z","cycle":"0351","reason":"wrapper_cycle_failed","details":"Child process exited with code 3221225786"}
+{"at":"2026-02-27T02:26:44.521Z","cycle":"0354","reason":"wrapper_cycle_failed","details":"Child process exited with code 3221225786"}
+{"at":"2026-02-27T10:33:38.548Z","cycle":"0434","reason":"hand_attempt_1_failed","details":"spawn openclaw ENOENT"}
+{"at":"2026-02-27T10:33:54.564Z","cycle":"0434","reason":"hand_attempt_2_failed","details":"spawn openclaw ENOENT"}
+{"at":"2026-02-27T10:34:24.580Z","cycle":"0434","reason":"hand_attempt_3_failed","details":"spawn openclaw ENOENT"}
+{"at":"2026-02-27T10:44:46.584Z","cycle":"0435","reason":"hand_attempt_1_failed","details":"spawn EINVAL"}
+{"at":"2026-02-27T10:45:02.596Z","cycle":"0435","reason":"hand_attempt_2_failed","details":"spawn EINVAL"}
+{"at":"2026-02-27T10:45:32.615Z","cycle":"0435","reason":"hand_attempt_3_failed","details":"spawn EINVAL"}
+{"at":"2026-02-27T10:46:02.761Z","cycle":"0436","reason":"hand_attempt_1_failed","details":"spawn EINVAL"}
+{"at":"2026-02-27T10:46:18.769Z","cycle":"0436","reason":"hand_attempt_2_failed","details":"spawn EINVAL"}
+{"at":"2026-02-27T10:46:48.783Z","cycle":"0436","reason":"hand_attempt_3_failed","details":"spawn EINVAL"}
+{"at":"2026-02-27T10:49:12.562Z","cycle":"0437","reason":"hand_attempt_1_failed","details":"spawn EINVAL"}
+{"at":"2026-02-27T10:49:28.577Z","cycle":"0437","reason":"hand_attempt_2_failed","details":"spawn EINVAL"}
+{"at":"2026-02-27T10:49:58.599Z","cycle":"0437","reason":"hand_attempt_3_failed","details":"spawn EINVAL"}
+{"at":"2026-02-27T10:54:14.086Z","cycle":"0438","reason":"hand_attempt_1_failed","details":"spawn EINVAL"}
+{"at":"2026-02-27T10:54:30.094Z","cycle":"0438","reason":"hand_attempt_2_failed","details":"spawn EINVAL"}
+{"at":"2026-02-27T10:55:00.112Z","cycle":"0438","reason":"hand_attempt_3_failed","details":"spawn EINVAL"}
+{"at":"2026-02-27T10:55:14.567Z","cycle":"0439","reason":"hand_attempt_1_failed","details":"spawn EINVAL"}
+{"at":"2026-02-27T10:55:30.599Z","cycle":"0439","reason":"hand_attempt_2_failed","details":"spawn EINVAL"}
+{"at":"2026-02-27T10:56:00.611Z","cycle":"0439","reason":"hand_attempt_3_failed","details":"spawn EINVAL"}
+{"at":"2026-02-27T10:58:12.692Z","cycle":"0440","reason":"hand_attempt_1_failed","details":"spawn EINVAL"}
+{"at":"2026-02-27T10:58:28.699Z","cycle":"0440","reason":"hand_attempt_2_failed","details":"spawn EINVAL"}
+{"at":"2026-02-27T10:58:58.713Z","cycle":"0440","reason":"hand_attempt_3_failed","details":"spawn EINVAL"}
+{"at":"2026-02-27T11:15:36.391Z","cycle":"0441","reason":"hand_attempt_1_failed","details":"spawn EINVAL"}
+{"at":"2026-02-27T11:15:52.401Z","cycle":"0441","reason":"hand_attempt_2_failed","details":"spawn EINVAL"}
+{"at":"2026-02-27T11:16:22.414Z","cycle":"0441","reason":"hand_attempt_3_failed","details":"spawn EINVAL"}
+{"at":"2026-02-27T12:03:34.765Z","cycle":"0442","reason":"hand_attempt_1_failed","details":"spawn EINVAL"}
+{"at":"2026-02-27T12:03:50.778Z","cycle":"0442","reason":"hand_attempt_2_failed","details":"spawn EINVAL"}
+{"at":"2026-02-27T12:04:20.796Z","cycle":"0442","reason":"hand_attempt_3_failed","details":"spawn EINVAL"}
+{"at":"2026-02-27T13:03:49.675Z","cycle":"0444","reason":"hand_attempt_1_failed","details":"spawn EINVAL"}
+{"at":"2026-02-27T13:04:05.687Z","cycle":"0444","reason":"hand_attempt_2_failed","details":"spawn EINVAL"}
+{"at":"2026-02-27T13:04:35.703Z","cycle":"0444","reason":"hand_attempt_3_failed","details":"spawn EINVAL"}
+{"at":"2026-02-27T13:33:30.970Z","cycle":"0445","reason":"hand_attempt_1_failed","details":"spawn EINVAL"}
+{"at":"2026-02-27T13:33:46.981Z","cycle":"0445","reason":"hand_attempt_2_failed","details":"spawn EINVAL"}
+{"at":"2026-02-27T13:34:16.996Z","cycle":"0445","reason":"hand_attempt_3_failed","details":"spawn EINVAL"}
+{"at":"2026-02-27T14:03:14.086Z","cycle":"0446","reason":"hand_attempt_1_failed","details":"spawn EINVAL"}
+{"at":"2026-02-27T14:03:30.101Z","cycle":"0446","reason":"hand_attempt_2_failed","details":"spawn EINVAL"}
+{"at":"2026-02-27T14:04:00.115Z","cycle":"0446","reason":"hand_attempt_3_failed","details":"spawn EINVAL"}
+{"at":"2026-02-27T14:30:31.918Z","cycle":"0447","reason":"hand_attempt_1_failed","details":"spawn EINVAL"}
+{"at":"2026-02-27T14:30:47.959Z","cycle":"0447","reason":"hand_attempt_2_failed","details":"spawn EINVAL"}
+{"at":"2026-02-27T14:31:18.051Z","cycle":"0447","reason":"hand_attempt_3_failed","details":"spawn EINVAL"}
+{"at":"2026-02-27T15:25:33.754Z","cycle":"0448","reason":"hand_attempt_1_failed","details":"spawn EINVAL"}
+{"at":"2026-02-27T15:25:49.767Z","cycle":"0448","reason":"hand_attempt_2_failed","details":"spawn EINVAL"}
+{"at":"2026-02-27T15:26:19.783Z","cycle":"0448","reason":"hand_attempt_3_failed","details":"spawn EINVAL"}
+{"at":"2026-02-27T15:55:53.668Z","cycle":"0449","reason":"hand_attempt_1_failed","details":"spawn EINVAL"}
+{"at":"2026-02-27T15:56:09.685Z","cycle":"0449","reason":"hand_attempt_2_failed","details":"spawn EINVAL"}
+{"at":"2026-02-27T15:56:39.704Z","cycle":"0449","reason":"hand_attempt_3_failed","details":"spawn EINVAL"}
+{"at":"2026-02-27T16:25:25.427Z","cycle":"0450","reason":"hand_attempt_1_failed","details":"spawn EINVAL"}
+{"at":"2026-02-27T16:25:41.439Z","cycle":"0450","reason":"hand_attempt_2_failed","details":"spawn EINVAL"}
+{"at":"2026-02-27T16:26:11.467Z","cycle":"0450","reason":"hand_attempt_3_failed","details":"spawn EINVAL"}
+{"at":"2026-02-27T16:55:50.397Z","cycle":"0451","reason":"hand_attempt_1_failed","details":"spawn EINVAL"}
+{"at":"2026-02-27T16:56:06.407Z","cycle":"0451","reason":"hand_attempt_2_failed","details":"spawn EINVAL"}
+{"at":"2026-02-27T16:56:36.427Z","cycle":"0451","reason":"hand_attempt_3_failed","details":"spawn EINVAL"}
+{"at":"2026-02-27T17:00:11.737Z","cycle":"0452","reason":"hand_attempt_1_failed","details":"spawn EINVAL"}
+{"at":"2026-02-27T17:00:27.745Z","cycle":"0452","reason":"hand_attempt_2_failed","details":"spawn EINVAL"}
+{"at":"2026-02-27T17:00:57.770Z","cycle":"0452","reason":"hand_attempt_3_failed","details":"spawn EINVAL"}
+{"at":"2026-02-27T17:06:31.057Z","cycle":"0453","reason":"hand_attempt_1_failed","details":"spawn EINVAL"}
+{"at":"2026-02-27T17:06:47.069Z","cycle":"0453","reason":"hand_attempt_2_failed","details":"spawn EINVAL"}
+{"at":"2026-02-27T17:07:17.085Z","cycle":"0453","reason":"hand_attempt_3_failed","details":"spawn EINVAL"}
+{"at":"2026-02-27T17:07:28.171Z","cycle":"0454","reason":"hand_attempt_1_failed","details":"spawn EINVAL"}
+{"at":"2026-02-27T17:07:44.180Z","cycle":"0454","reason":"hand_attempt_2_failed","details":"spawn EINVAL"}
+{"at":"2026-02-27T17:08:14.196Z","cycle":"0454","reason":"hand_attempt_3_failed","details":"spawn EINVAL"}
+{"at":"2026-02-27T17:10:24.809Z","cycle":"0455","reason":"hand_attempt_1_failed","details":"spawn EINVAL"}
+{"at":"2026-02-27T17:10:40.819Z","cycle":"0455","reason":"hand_attempt_2_failed","details":"spawn EINVAL"}
+{"at":"2026-02-27T17:11:10.834Z","cycle":"0455","reason":"hand_attempt_3_failed","details":"spawn EINVAL"}
+{"at":"2026-02-27T17:25:57.601Z","cycle":"0456","reason":"hand_attempt_1_failed","details":"spawn EINVAL"}
+{"at":"2026-02-27T17:26:13.618Z","cycle":"0456","reason":"hand_attempt_2_failed","details":"spawn EINVAL"}
+{"at":"2026-02-27T17:26:43.640Z","cycle":"0456","reason":"hand_attempt_3_failed","details":"spawn EINVAL"}

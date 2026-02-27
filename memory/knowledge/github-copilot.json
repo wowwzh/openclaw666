@@ -1,0 +1,24 @@
+{
+  "url": "https://github.com/features/copilot",
+  "title": "GitHub Copilot - Your AI pair programmer",
+  "learned_at": "2026-02-17T08:57:00",
+  "key_points": {
+    "概念": [
+      "GitHub Copilot 是 AI 编程助手",
+      "支持 VS Code、JetBrains、Neovim 等编辑器",
+      "Copilot Agents 可以自主完成代码编写和 PR 创建",
+      "Copilot CLI 支持终端自然语言命令"
+    ],
+    "定价": [
+      "Free: 免费版",
+      "Pro: $10/月或$100/年",
+      "Pro+: $39/月或$390/年"
+    ],
+    "企业功能": [
+      "Copilot Spaces: 创建团队共享知识库",
+      "MCP 服务器集成控制",
+      "可自定义 AI 知道的知识和行为方式"
+    ]
+  },
+  "summary": "GitHub Copilot 是 GitHub 的 AI 编程助手,提供代码补全、聊天、代码解释等功能。支持多种编辑器,有免费版和付费版,企业版提供更多定制能力。"
+}

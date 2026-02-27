@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>学习计时器</title>
+  <style>
+    body{font-family:sans-serif;display:flex;justify-content:center;align-items:center;min-height:100vh;background:linear-gradient(135deg,#667eea,#764ba2)}
+    .card{background:white;padding:2rem;border-radius:16px;text-align:center;min-width:300px}
+    .timer{font-size:3rem;font-weight:bold;color:#667eea;margin:1rem 0}
+    .btns{display:flex;gap:0.5rem;justify-content:center}
+    button{padding:0.75rem 1.5rem;border:none;border-radius:8px;font-size:1rem;cursor:pointer}
+    .start{background:#10b981;color:white}
+    .stop{background:#ef4444;color:white}
+    .reset{background:#64748b;color:white}
+    .stats{margin-top:1rem;color:#64748b;font-size:0.9rem}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>📚 学习计时器</h2>
+    <div class="timer" id="timer">00:00:00</div>
+    <div class="btns">
+      <button class="start" onclick="start()">开始</button>
+      <button class="stop" onclick="stop()">暂停</button>
+      <button class="reset" onclick="reset()">重置</button>
+    </div>
+    <div class="stats">
+      <div>今日学习: <span id="today">0</span> 小时</div>
+      <div>总学习: <span id="total">0</span> 小时</div>
+    </div>
+  </div>
+  <script>
+    let seconds=0, interval=null;
+    const todayKey='learn_today',totalKey='learn_total';
+    function update(){
+      const h=String(Math.floor(seconds/3600)).padStart(2,'0');
+      const m=String(Math.floor(seconds%3600/60)).padStart(2,'0');
+      const s=String(seconds%60).padStart(2,'0');
+      document.getElementById('timer').innerText=`${h}:${m}:${s}`;
+    }
+    function start(){
+      if(interval)return;
+      interval=setInterval(()=>{seconds++;update();save();},1000);
+    }
+    function stop(){clearInterval(interval);interval=null;}
+    function reset(){stop();seconds=0;update();}
+    function save(){
+      const today=new Date().toDateString();
+      const last=localStorage.getItem('learn_date');
+      if(last!==today){localStorage.setItem('learn_date',today);localStorage.setItem(todayKey,'0');}
+      const t=parseInt(localStorage.getItem(todayKey)||'0')+1;
+      if(seconds%60===0)localStorage.setItem(todayKey,t);
+      const tot=parseInt(localStorage.getItem(totalKey)||'0');
+      if(seconds%60===0)localStorage.setItem(totalKey,tot+1);
+      document.getElementById('today').innerText=localStorage.getItem(todayKey)||'0';
+      document.getElementById('total').innerText=localStorage.getItem(totalKey)||'0';
+    }
+    document.getElementById('today').innerText=localStorage.getItem(todayKey)||'0';
+    document.getElementById('total').innerText=localStorage.getItem(totalKey)||'0';
+  </script>
+</body>
+</html>

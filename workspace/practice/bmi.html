@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>BMI计算器</title>
+  <style>
+    body{font-family:sans-serif;display:flex;justify-content:center;align-items:center;min-height:100vh;background:#e0f2fe}
+    .card{background:white;padding:2rem;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,0.1);text-align:center}
+    input{padding:10px;font-size:16px;width:100px;border:2px solid #3b82f6;border-radius:8px;margin:5px}
+    button{padding:10px 24px;background:#3b82f6;color:white;border:none;border-radius:8px;cursor:pointer;font-size:16px;margin-top:10px}
+    #result{font-size:1.5rem;font-weight:bold;margin-top:1rem}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>⚖️ BMI计算器</h2>
+    <input type="number" id="height" placeholder="身高(cm)">
+    <input type="number" id="weight" placeholder="体重(kg)">
+    <br>
+    <button onclick="calc()">计算BMI</button>
+    <div id="result"></div>
+  </div>
+  <script>
+    function calc(){
+      const h=parseFloat(document.getElementById('height').value)/100;
+      const w=parseFloat(document.getElementById('weight').value);
+      if(!h||!w)return alert('请输入身高体重');
+      const bmi=(w/(h*h)).toFixed(1);
+      let color,msg;
+      if(bmi<18.5){color='#3b82f6';msg='偏瘦 📉'}
+      else if(bmi<24){color='#10b981';msg='正常 ✅'}
+      else if(bmi<28){color='#f59e0b';msg='偏胖 ⚠️'}
+      else{color='#ef4444';msg='肥胖 ❌'}
+      document.getElementById('result').innerHTML=`<span style="color:${color}">BMI:${bmi}</span><br><span style="font-size:1rem;color:${color}">${msg}</span>`;
+    }
+  </script>
+</body>
+</html>

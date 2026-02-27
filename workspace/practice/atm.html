@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>幼楚的ATM</title>
+  <style>
+    body { font-family: sans-serif; min-height: 100vh; background: #f8fafc; display: flex; justify-content: center; align-items: center; padding: 2rem; }
+    .atm { background: white; padding: 2rem; border-radius: 16px; max-width: 350px; }
+    h1 { color: #1e293b; text-align: center; margin-bottom: 1rem; }
+    .balance { background: #3b82f6; color: white; padding: 1rem; border-radius: 8px; text-align: center; margin-bottom: 1rem; }
+    .balance span { font-size: 2rem; font-weight: bold; }
+    .btns { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.5rem; }
+    button { padding: 1rem; border: none; border-radius: 8px; cursor: pointer; font-size: 1rem; background: #f1f5f9; color: #475569; }
+    button:hover { background: #e2e8f0; }
+    .input-area { margin-top: 1rem; display: none; }
+    .input-area.show { display: block; }
+    input { width: 100%; padding: 0.75rem; border: 1px solid #e2e8f0; border-radius: 8px; margin-bottom: 0.5rem; }
+  </style>
+</head>
+<body>
+  <div class="atm">
+    <h1>🏧 ATM</h1>
+    <div class="balance">余额: <span id="balance">10000</span>元</div>
+    <div class="btns">
+      <button onclick="showInput('存款')">存款</button>
+      <button onclick="showInput('取款')">取款</button>
+      <button onclick="transfer()">转账</button>
+      <button onclick="history()">明细</button>
+    </div>
+    <div class="input-area" id="inputArea">
+      <input type="number" id="amount" placeholder="输入金额">
+      <button onclick="confirm()" style="width:100%;background:#3b82f6;color:white">确认</button>
+    </div>
+    <div id="msg" style="margin-top:1rem;text-align:center;color:#64748b"></div>
+  </div>
+  <script>
+    let balance = 10000;
+    let mode = '';
+    function showInput(m) { mode = m; document.getElementById('inputArea').classList.add('show'); document.getElementById('msg').textContent = ''; }
+    function confirm() {
+      const amt = parseInt(document.getElementById('amount').value);
+      if (!amt || amt <= 0) { document.getElementById('msg').textContent = '请输入有效金额'; return; }
+      if (mode === '存款') { balance += amt; document.getElementById('msg').textContent = `存款+${amt}元成功`; }
+      else if (mode === '取款') { if (amt > balance) { document.getElementById('msg').textContent = '余额不足'; return; } balance -= amt; document.getElementById('msg').textContent = `取款-${amt}元成功`; }
+      document.getElementById('balance').textContent = balance;
+      document.getElementById('amount').value = '';
+    }
+    function transfer() { document.getElementById('msg').textContent = '转账功能开发中...'; }
+    function history() { document.getElementById('msg').textContent = '明细功能开发中...'; }
+  </script>
+</body>
+</html>

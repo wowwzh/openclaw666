@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>JSON格式化</title>
+  <style>
+    body{font-family:sans-serif;display:flex;gap:1rem;padding:2rem;background:#f8fafc}
+    .box{flex:1;display:flex;flex-direction:column}
+    textarea{flex:1;padding:1rem;border:2px solid #e2e8f0;border-radius:8px;font-family:monospace;font-size:14px;resize:none}
+    button{padding:1rem;background:#10b981;color:white;border:none;border-radius:8px;font-size:16px;cursor:pointer;margin:0.5rem 0}
+    button:hover{background:#059669}
+    h3{color:#475569;margin-bottom:0.5rem}
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h3>输入JSON</h3>
+    <textarea id="input" placeholder='{"name":"测试","value":123}'></textarea>
+    <button onclick="format()">格式化 →</button>
+  </div>
+  <div class="box">
+    <h3>格式化结果</h3>
+    <textarea id="output" readonly></textarea>
+    <button onclick="copy()">复制</button>
+  </div>
+  <script>
+    function format(){
+      try{
+        const obj=JSON.parse(document.getElementById('input').value);
+        document.getElementById('output').value=JSON.stringify(obj,null,2);
+      }catch(e){
+        alert('JSON格式错误: '+e.message);
+      }
+    }
+    function copy(){
+      navigator.clipboard.writeText(document.getElementById('output').value);
+      alert('已复制!');
+    }
+  </script>
+</body>
+</html>

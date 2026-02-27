@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI助手 - 智能待办</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        body { background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%); min-height: 100vh; }
+        .glass { background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); }
+        .task-card { transition: all 0.3s ease; }
+        .task-card:hover { transform: translateY(-2px); box-shadow: 0 10px 40px rgba(0,0,0,0.3); }
+        .fade-enter-active, .fade-leave-active { transition: opacity 0.3s; }
+        .fade-enter-from, .fade-leave-to { opacity: 0; }
+        .pulse { animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+    </style>
+</head>
+<body>
+    <div id="app" class="min-h-screen pb-20">
+        <!-- Header -->
+        <header class="glass py-6 sticky top-0 z-50">
+            <div class="container mx-auto px-4 max-w-4xl flex justify-between items-center">
+                <h1 class="text-2xl font-bold text-white">🤖 AI 智能待办</h1>
+                <div class="flex gap-2">
+                    <button @click="showAI=true" class="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-4 py-2 rounded-lg hover:opacity-90">
+                        ✨ AI 建议
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <main class="container mx-auto px-4 max-w-4xl py-6">
+            <!-- 添加任务 -->
+            <div class="glass rounded-2xl p-6 mb-6">
+                <div class="flex gap-2 mb-3">
+                    <input v-model="newTask.title" @keyup.enter="addTask" placeholder="添加新任务..." 
+                           class="flex-1 px-4 py-3 bg-white/20 border border-white/30 rounded-lg text-white placeholder-white/50 outline-none">
+                    <select v-model="newTask.category" class="px-3 py-2 bg-white/20 border border-white/30 rounded-lg text-white">
+                        <option value="work" class="text-black">💼 工作</option>
+                        <option value="life" class="text-black">🏠 生活</option>
+                        <option value="study" class="text-black">📚 学习</option>
+                        <option value="health" class="text-black">❤️ 健康</option>
+                    </select>
+                </div>
+                <div class="flex gap-2">
+                    <button @click="addTask" class="flex-1 bg-gradient-to-r from-green-500 to-teal-500 text-white py-3 rounded-lg hover:opacity-90 font-bold">
+                        ➕ 添加
+                    </button>
+                    <button @click="showStats=!showStats" class="px-4 py-3 glass rounded-lg text-white">
+                        📊
+                    </button>
+                </div>
+            </div>
+
+            <!-- 统计面板 -->
+            <transition name="fade">
+                <div v-if="showStats" class="glass rounded-2xl p-6 mb-6">
+                    <h3 class="text-white font-bold mb-4">📈 统计</h3>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <div class="text-center">
+                            <p class="text-3xl font-bold text-white">{{ tasks.length }}</p>
+                            <p class="text-white/60">总任务</p>
+                        </div>
+                        <div class="text-center">
+                            <p class="text-3xl font-bold text-green-400">{{ completedCount }}</p>
+                            <p class="text-white/60">已完成</p>
+                        </div>
+                        <div class="text-center">
+                            <p class="text-3xl font-bold text-yellow-400">{{ pendingCount }}</p>
+                            <p class="text-white/60">待完成</p>
+                        </div>
+                        <div class="text-center">
+                            <p class="text-3xl font-bold text-purple-400">{{ Math.round(progress) }}%</p>
+                            <p class="text-white/60">完成率</p>
+                        </div>
+                    </div>
+                    <!-- 分类统计 -->
+                    <div class="mt-4 pt-4 border-t border-white/20">
+                        <p class="text-white/60 mb-2">分类分布</p>
+                        <div class="flex gap-2 flex-wrap">
+                            <span class="px-3 py-1 bg-blue-500/50 rounded-full text-white text-sm">💼 {{ categoryCount('work') }}</span>
+                            <span class="px-3 py-1 bg-pink-500/50 rounded-full text-white text-sm">🏠 {{ categoryCount('life') }}</span>
+                            <span class="px-3 py-1 bg-yellow-500/50 rounded-full text-white text-sm">📚 {{ categoryCount('study') }}</span>
+                            <span class="px-3 py-1 bg-red-500/50 rounded-full text-white text-sm">❤️ {{ categoryCount('health') }}</span>
+                        </div>
+                    </div>
+                </div>
+            </transition>
+
+            <!-- 筛选 -->
+            <div class="flex gap-2 mb-4 overflow-x-auto pb-2">
+                <button v-for="cat in ['all','work','life','study','health']" :key="cat"
+                        @click="filter=cat"
+                        :class="filter===cat?'bg-white text-purple-600':'glass text-white hover:bg-white/20'"
+                        class="px-4 py-2 rounded-full whitespace-nowrap font-medium">
+                    {{ cat==='all'?'全部':cat==='work'?'💼工作':cat==='life'?'🏠生活':cat==='study'?'📚学习':'❤️健康' }}
+                </button>
+            </div>
+
+            <!-- 任务列表 -->
+            <div class="space-y-3">
+                <transition-group name="fade">
+                    <div v-for="task in filteredTasks" :key="task.id" 
+                         class="task-card glass rounded-xl p-4"
+                         :class="{'opacity-50':task.completed}">
+                        <div class="flex items-start gap-3">
+                            <input type="checkbox" v-model="task.completed" @change="save"
+                                   class="mt-1 w-5 h-5 rounded accent-green-500 cursor-pointer">
+                            <div class="flex-1">
+                                <h3 class="font-bold text-lg text-white" 
+                                    :class="{'line-through opacity-50':task.completed}">
+                                    {{ task.title }}
+                                </h3>
+                                <div class="flex gap-2 mt-2">
+                                    <span class="text-xs px-2 py-1 rounded"
+                                          :class="{'bg-blue-500/50':task.category=='work','bg-pink-500/50':task.category=='life','bg-yellow-500/50':task.category=='study','bg-red-500/50':task.category=='health'}">
+                                        {{ task.category=='work'?'💼工作':task.category=='life'?'🏠生活':task.category=='study'?'📚学习':'❤️健康' }}
+                                    </span>
+                                    <span class="text-xs text-white/40">{{ task.created }}</span>
+                                </div>
+                            </div>
+                            <button @click="deleteTask(task.id)" class="text-white/40 hover:text-red-400">🗑️</button>
+                        </div>
+                    </div>
+                </transition-group>
+            </div>
+
+            <div v-if="filteredTasks.length===0" class="text-center py-12">
+                <p class="text-4xl mb-4">🎉</p>
+                <p class="text-white/60 text-lg">所有任务完成！</p>
+            </div>
+        </main>
+
+        <!-- AI 建议弹窗 -->
+        <transition name="fade">
+            <div v-if="showAI" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4" @click.self="showAI=false">
+                <div class="glass rounded-2xl p-6 max-w-lg w-full">
+                    <h2 class="text-xl font-bold text-white mb-4">✨ AI 智能建议</h2>
+                    <div class="bg-white/10 rounded-lg p-4 mb-4">
+                        <p v-if="pendingCount>5" class="text-white">
+                            🔥 你有 <span class="font-bold text-yellow-400">{{ pendingCount }}</span> 个待办任务，
+                            建议先完成 <span class="font-bold text-green-400">{{ topPriority }}</span> 
+                        </p>
+                        <p v-else class="text-green-400">
+                            👍 任务不多，完成得很棒！
+                        </p>
+                        <p class="text-white/60 mt-2 text-sm">
+                            💡 建议：按重要性排序，先做最重要的事
+                        </p>
+                    </div>
+                    <button @click="showAI=false" class="w-full bg-white text-purple-600 py-2 rounded-lg font-bold">
+                        知道了
+                    </button>
+                </div>
+            </div>
+        </transition>
+    </div>
+
+    <script>
+        const { createApp, ref, computed, onMounted } = Vue;
+        createApp({
+            setup() {
+                const tasks = ref([]);
+                const newTask = ref({title: '', category: 'work'});
+                const filter = ref('all');
+                const showStats = ref(false);
+                const showAI = ref(false);
+                
+                onMounted(() => {
+                    const saved = localStorage.getItem('ai_todo_tasks');
+                    if (saved) tasks.value = JSON.parse(saved);
+                });
+                
+                const save = () => localStorage.setItem('ai_todo_tasks', JSON.stringify(tasks.value));
+                
+                const addTask = () => {
+                    if (!newTask.value.title.trim()) return;
+                    tasks.value.unshift({
+                        id: Date.now(),
+                        title: newTask.value.title,
+                        category: newTask.value.category,
+                        completed: false,
+                        created: new Date().toLocaleDateString()
+                    });
+                    newTask.value.title = '';
+                    save();
+                };
+                
+                const deleteTask = (id) => tasks.value = tasks.value.filter(t => t.id !== id) || save();
+                
+                const filteredTasks = computed(() => {
+                    if (filter.value === 'all') return tasks.value;
+                    return tasks.value.filter(t => t.category === filter.value);
+                });
+                
+                const completedCount = computed(() => tasks.value.filter(t => t.completed).length);
+                const pendingCount = computed(() => tasks.value.filter(t => !t.completed).length);
+                const progress = computed(() => tasks.value.length ? (completedCount.value / tasks.value.length * 100) : 0);
+                const categoryCount = (cat) => tasks.value.filter(t => t.category === cat).length;
+                const topPriority = computed(() => {
+                    const pending = tasks.value.filter(t => !t.completed);
+                    return pending.length ? pending[0].title.substring(0, 10) + '...' : '';
+                });
+                
+                return { tasks, newTask, filter, showStats, showAI, addTask, deleteTask, filteredTasks, 
+                         completedCount, pendingCount, progress, categoryCount, topPriority, save };
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>

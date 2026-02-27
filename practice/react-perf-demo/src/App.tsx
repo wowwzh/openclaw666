@@ -1,0 +1,303 @@
+import { useState, useCallback, useMemo } from 'react'
+import './App.css'
+
+// ============================================
+// Demo 1: useMemo - 避免不必要的计算
+// ============================================
+
+// 模拟一个耗时的计算
+function expensiveCalculation(num: number): number {
+  console.log('💰 执行耗时计算...')
+  let result = 0
+  for (let i = 0; i < 10000000; i++) {
+    result += Math.sqrt(num * i)
+  }
+  return result
+}
+
+// ❌ 未优化：每次渲染都会重新计算
+function UnoptimizedCalc({ num }: { num: number }) {
+  const result = expensiveCalculation(num)
+  return (
+    <div className="card">
+      <h3>❌ 未优化 (No useMemo)</h3>
+      <p>输入: {num}</p>
+      <p>计算结果: {result.toLocaleString()}</p>
+    </div>
+  )
+}
+
+// ✅ 优化后：只有当 num 改变时才重新计算
+function OptimizedCalc({ num }: { num: number }) {
+  const result = useMemo(() => expensiveCalculation(num), [num])
+  return (
+    <div className="card optimized">
+      <h3>✅ 优化后 (With useMemo)</h3>
+      <p>输入: {num}</p>
+      <p>计算结果: {result.toLocaleString()}</p>
+    </div>
+  )
+}
+
+// ============================================
+// Demo 2: useCallback - 避免不必要的组件渲染
+// ============================================
+
+type ButtonProps = {
+  onClick: () => void
+  label: string
+  renderCount: number
+}
+
+// ❌ 未优化：每次父组件渲染，这个组件都会重新渲染
+function UnoptimizedButton({ onClick, label, renderCount }: ButtonProps) {
+  console.log(`🔴 UnoptimizedButton 渲染 - ${label}`)
+  return (
+    <button className="demo-button" onClick={onClick}>
+      {label} (渲染次数: {renderCount})
+    </button>
+  )
+}
+
+// ✅ 优化后：只有当 onClick 改变时才重新渲染
+function OptimizedButton({ onClick, label, renderCount }: ButtonProps) {
+  console.log(`🟢 OptimizedButton 渲染 - ${label}`)
+  return (
+    <button className="demo-button optimized" onClick={onClick}>
+      {label} (渲染次数: {renderCount})
+    </button>
+  )
+}
+
+// ============================================
+// Demo 3: 完整的父组件演示
+// ============================================
+
+function UseMemoDemo() {
+  const [number, setNumber] = useState(42)
+  // 用于触发强制重新渲染
+  const [, setForceRender] = useState(0)
+
+  return (
+    <div className="demo-section">
+      <h2>📊 useMemo Demo - 避免不必要的计算</h2>
+      <p className="description">
+        点击 "强制重新渲染" 按钮，观察控制台输出和组件变化<br/>
+        未优化的组件会重新执行耗时计算，优化的组件不会
+      </p>
+      
+      <div className="controls">
+        <label>
+          输入数字: 
+          <input 
+            type="number" 
+            value={number} 
+            onChange={(e) => setNumber(Number(e.target.value))}
+          />
+        </label>
+        <button onClick={() => setForceRender(f => f + 1)}>
+          🔄 强制重新渲染 (不改变任何数据)
+        </button>
+      </div>
+
+      <div className="comparison">
+        <UnoptimizedCalc num={number} />
+        <OptimizedCalc num={number} />
+      </div>
+    </div>
+  )
+}
+
+function UseCallbackDemo() {
+  const [count, setCount] = useState(0)
+  const [buttonRenderCount, setButtonRenderCount] = useState({ unoptimized: 0, optimized: 0 })
+
+  // ✅ 优化后：使用 useCallback 缓存函数
+  const optimizedIncrement = useCallback(() => {
+    setCount(c => c + 1)
+  }, []) // 空依赖数组，函数永远不会改变
+
+  // 用于追踪渲染次数
+  const [, forceUpdate] = useState(0)
+  
+  const triggerRender = () => {
+    setButtonRenderCount(prev => ({ ...prev }))
+    forceUpdate(f => f + 1)
+  }
+
+  return (
+    <div className="demo-section">
+      <h2>📊 useCallback Demo - 避免不必要的子组件渲染</h2>
+      <p className="description">
+        点击 "增加计数" 按钮多次，然后点击 "强制重新渲染父组件"<br/>
+        观察两个按钮的渲染次数差异
+      </p>
+
+      <div className="controls">
+        <span>当前计数: <strong>{count}</strong></span>
+        <button onClick={triggerRender}>
+          🔄 强制重新渲染父组件
+        </button>
+      </div>
+
+      <div className="comparison">
+        <div className="card">
+          <h3>❌ 未优化 (No useCallback)</h3>
+          <p>父组件渲染时，子组件函数引用不同</p>
+          <UnoptimizedButton 
+            onClick={() => setCount(c => c + 1)} 
+            label="点击增加"
+            renderCount={++buttonRenderCount.unoptimized}
+          />
+        </div>
+        
+        <div className="card optimized">
+          <h3>✅ 优化后 (With useCallback)</h3>
+          <p>父组件渲染时，函数引用保持不变</p>
+          <OptimizedButton 
+            onClick={optimizedIncrement} 
+            label="点击增加"
+            renderCount={++buttonRenderCount.optimized}
+          />
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// ============================================
+// 性能测试组件
+// ============================================
+
+function PerformanceTest() {
+  const [testRunning, setTestRunning] = useState(false)
+  const [results, setResults] = useState<{ unoptimized: number; optimized: number } | null>(null)
+
+  const runTest = async () => {
+    setTestRunning(true)
+    setResults(null)
+
+    // 测试未优化版本
+    const unoptimizedStart = performance.now()
+    let sum = 0
+    for (let i = 0; i < 1000; i++) {
+      sum += expensiveCalculation(42)
+    }
+    const unoptimizedTime = performance.now() - unoptimizedStart
+
+    // 测试优化版本 (使用 useMemo 模拟)
+    const optimizedStart = performance.now()
+    let sum2 = 0
+    let cached = expensiveCalculation(42) // 模拟 useMemo 缓存
+    for (let i = 0; i < 1000; i++) {
+      sum2 += cached // 直接使用缓存
+    }
+    const optimizedTime = performance.now() - optimizedStart
+
+    setResults({
+      unoptimized: Math.round(unoptimizedTime),
+      optimized: Math.round(optimizedTime)
+    })
+    setTestRunning(false)
+  }
+
+  return (
+    <div className="demo-section">
+      <h2>⚡ 性能测试 - 实际耗时对比</h2>
+      <p className="description">
+        执行 1000 次相同计算，对比优化前后的执行时间
+      </p>
+
+      <button 
+        className="test-button" 
+        onClick={runTest}
+        disabled={testRunning}
+      >
+        {testRunning ? '🧪 测试中...' : '▶️ 运行性能测试'}
+      </button>
+
+      {results && (
+        <div className="results">
+          <div className="result-card">
+            <h4>❌ 未优化</h4>
+            <p className="time">{results.unoptimized}ms</p>
+          </div>
+          <div className="result-card optimized">
+            <h4>✅ 优化后</h4>
+            <p className="time">{results.optimized}ms</p>
+          </div>
+          <div className="result-card highlight">
+            <h4>🚀 性能提升</h4>
+            <p className="time">
+              {((results.unoptimized - results.optimized) / results.unoptimized * 100).toFixed(1)}%
+            </p>
+          </div>
+        </div>
+      )}
+    </div>
+  )
+}
+
+// ============================================
+// 主 App 组件
+// ============================================
+
+function App() {
+  const [activeDemo, setActiveDemo] = useState<'memo' | 'callback' | 'perf'>('memo')
+
+  return (
+    <div className="app">
+      <header>
+        <h1>⚛️ React 性能优化 Demo</h1>
+        <p>useMemo vs useCallback 实战演示</p>
+      </header>
+
+      <nav className="tabs">
+        <button 
+          className={activeDemo === 'memo' ? 'active' : ''}
+          onClick={() => setActiveDemo('memo')}
+        >
+          🧠 useMemo
+        </button>
+        <button 
+          className={activeDemo === 'callback' ? 'active' : ''}
+          onClick={() => setActiveDemo('callback')}
+        >
+          🎯 useCallback
+        </button>
+        <button 
+          className={activeDemo === 'perf' ? 'active' : ''}
+          onClick={() => setActiveDemo('perf')}
+        >
+          📈 性能测试
+        </button>
+      </nav>
+
+      <main>
+        {activeDemo === 'memo' && <UseMemoDemo />}
+        {activeDemo === 'callback' && <UseCallbackDemo />}
+        {activeDemo === 'perf' && <PerformanceTest />}
+      </main>
+
+      <footer>
+        <p>打开浏览器控制台查看详细日志</p>
+      </footer>
+    </div>
+  )
+}
+
+export default App
+
+// ============================================
+// Demo 4: React.memo - ǳ�Ƚ��Ż� (2026-02-23����)
+// ============================================
+
+// ʹ�� React.memo ��װ���
+const MemoizedButton = React.memo(function OptimizedButton({ onClick, label }: ButtonProps) {
+  console.log(?? MemoizedButton ��Ⱦ - )
+  return (
+    <button className=" demo-button optimized\ onClick={onClick}>
+ {label}
+ </button>
+ )
+})

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>剪贴板历史</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        h1 { text-align: center; color: #333; }
+        .clip-item {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .clip-item:last-child { border-bottom: none; }
+        .clip-content {
+            flex: 1;
+            word-break: break-all;
+            max-height: 60px;
+            overflow: hidden;
+        }
+        .clip-time { color: #999; font-size: 12px; margin-right: 10px; }
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-left: 5px;
+        }
+        .btn-copy { background: #4CAF50; color: white; }
+        .btn-delete { background: #f44336; color: white; }
+        .empty { text-align: center; color: #999; padding: 40px; }
+        .clear-all {
+            width: 100%;
+            padding: 12px;
+            background: #f44336;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="container">
+            <h1>📋 剪贴板历史</h1>
+            <p style="text-align:center;color:#666;">点击复制按钮快速复制到剪贴板</p>
+            
+            <div v-if="clips.length === 0" class="empty">
+                暂无剪贴板记录<br>
+                <small>复制内容后会自动记录</small>
+            </div>
+            
+            <div v-else>
+                <div v-for="(clip, i) in clips" :key="i" class="clip-item">
+                    <div class="clip-content">{{ clip.text }}</div>
+                    <div>
+                        <span class="clip-time">{{ clip.time }}</span>
+                        <button class="btn btn-copy" @click="copy(clip.text)">复制</button>
+                        <button class="btn btn-delete" @click="delete(i)">删除</button>
+                    </div>
+                </div>
+                <button class="clear-all" @click="clearAll">清空全部</button>
+            </div>
+            
+            <p style="text-align:center;color:#999;margin-top:20px;">
+                共 {{ clips.length }} 条记录
+            </p>
+        </div>
+    </div>
+
+    <script>
+        const { createApp, ref, onMounted } = Vue;
+        
+        createApp({
+            setup() {
+                const clips = ref([]);
+                
+                // 读取本地存储
+                onMounted(() => {
+                    const saved = localStorage.getItem('clipboard_history');
+                    if (saved) clips.value = JSON.parse(saved);
+                    
+                    // 监听剪贴板变化
+                    setInterval(async () => {
+                        try {
+                            const text = await navigator.clipboard.readText();
+                            if (text && text.trim() && (!clips.value.length || clips.value[0].text !== text)) {
+                                const now = new Date();
+                                const time = `${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}:${now.getSeconds().toString().padStart(2,'0')}`;
+                                clips.value.unshift({ text: text.substring(0, 500), time });
+                                if (clips.value.length > 50) clips.value.pop();
+                                localStorage.setItem('clipboard_history', JSON.stringify(clips.value));
+                            }
+                        } catch(e) {}
+                    }, 2000);
+                });
+                
+                const copy = async (text) => {
+                    await navigator.clipboard.writeText(text);
+                    alert('已复制!');
+                };
+                
+                const deleteItem = (i) => { clips.value.splice(i, 1); localStorage.setItem('clipboard_history', JSON.stringify(clips.value)); };
+                const clearAll = () => { if(confirm('确定清空?')) { clips.value = []; localStorage.removeItem('clipboard_history'); }};
+                
+                return { clips, copy, delete: deleteItem, clearAll };
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>

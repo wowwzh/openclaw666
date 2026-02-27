@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>番茄钟</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        .timer {
+            font-size: 80px;
+            font-weight: bold;
+            color: #333;
+            margin: 20px 0;
+        }
+        .btn {
+            padding: 15px 40px;
+            font-size: 18px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            margin: 5px;
+            transition: transform 0.2s;
+        }
+        .btn:hover { transform: scale(1.05); }
+        .btn-start { background: #4CAF50; color: white; }
+        .btn-pause { background: #FF9800; color: white; }
+        .btn-reset { background: #9E9E9E; color: white; }
+        .modes { margin-top: 20px; }
+        .mode-btn {
+            padding: 10px 20px;
+            margin: 5px;
+            border: 2px solid #667eea;
+            background: white;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+        .mode-btn.active { background: #667eea; color: white; }
+        .tasks { margin-top: 30px; text-align: left; }
+        .task {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+        }
+        .task.done { text-decoration: line-through; color: #999; }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="container">
+            <h1>🍅 番茄钟</h1>
+            <div class="modes">
+                <button class="mode-btn" :class="{active: mode===25}" @click="setMode(25)">专注25分钟</button>
+                <button class="mode-btn" :class="{active: mode===15}" @click="setMode(15)">短休息15分钟</button>
+                <button class="mode-btn" :class="{active: mode===5}" @click="setMode(5)">长休息5分钟</button>
+            </div>
+            <div class="timer">{{ formatTime(timeLeft) }}</div>
+            <div>
+                <button v-if="!running" class="btn btn-start" @click="start">开始</button>
+                <button v-else class="btn btn-pause" @click="pause">暂停</button>
+                <button class="btn btn-reset" @click="reset">重置</button>
+            </div>
+            <div class="tasks">
+                <h3>任务列表</h3>
+                <div v-for="(task, i) in tasks" :key="i" class="task">
+                    <span :class="{done: task.done}" @click="toggleTask(i)">{{ task.text }}</span>
+                    <button @click="deleteTask(i)" style="color:red;border:none;background:none;cursor:pointer;">✕</button>
+                </div>
+                <input v-model="newTask" @keyup.enter="addTask" placeholder="添加任务..." style="width:100%;padding:10px;margin-top:10px;">
+            </div>
+            <p style="margin-top:20px;color:#666;">已完成 {{ completedCount }} 个任务</p>
+        </div>
+    </div>
+    <script>
+        const { createApp, ref, computed } = Vue;
+        createApp({
+            setup() {
+                const mode = ref(25);
+                const timeLeft = ref(25 * 60);
+                const running = ref(false);
+                const newTask = ref('');
+                const tasks = ref([]);
+                let timer = null;
+
+                const formatTime = (s) => {
+                    const m = Math.floor(s / 60);
+                    const sec = s % 60;
+                    return `${m.toString().padStart(2,'0')}:${sec.toString().padStart(2,'0')}`;
+                };
+
+                const setMode = (m) => {
+                    mode.value = m;
+                    timeLeft.value = m * 60;
+                    running.value = false;
+                    if (timer) clearInterval(timer);
+                };
+
+                const start = () => {
+                    running.value = true;
+                    timer = setInterval(() => {
+                        if (timeLeft.value > 0) timeLeft.value--;
+                        else { pause(); alert('时间到！'); }
+                    }, 1000);
+                };
+
+                const pause = () => { running.value = false; clearInterval(timer); };
+                const reset = () => { pause(); timeLeft.value = mode.value * 60; };
+                
+                const addTask = () => {
+                    if (newTask.value.trim()) {
+                        tasks.value.push({text: newTask.value, done: false});
+                        newTask.value = '';
+                    }
+                };
+                const toggleTask = (i) => { tasks.value[i].done = !tasks.value[i].done; };
+                const deleteTask = (i) => { tasks.value.splice(i, 1); };
+                const completedCount = computed(() => tasks.value.filter(t => t.done).length);
+
+                return { mode, timeLeft, running, newTask, tasks, formatTime, setMode, start, pause, reset, addTask, toggleTask, deleteTask, completedCount };
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>

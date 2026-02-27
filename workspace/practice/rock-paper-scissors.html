@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>石头剪刀布</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, sans-serif; min-height: 100vh; background: #f8fafc; display: flex; justify-content: center; align-items: center; }
+    .game { background: white; padding: 2rem; border-radius: 16px; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.1); max-width: 400px; }
+    h1 { color: #1e293b; margin-bottom: 1rem; }
+    .choices { display: flex; justify-content: center; gap: 1rem; margin: 1.5rem 0; }
+    .choice { width: 80px; height: 80px; border-radius: 50%; border: 2px solid #e2e8f0; background: white; font-size: 2.5rem; cursor: pointer; transition: all 0.2s; }
+    .choice:hover { border-color: #3b82f6; transform: scale(1.1); }
+    .result { font-size: 1.25rem; margin: 1rem 0; font-weight: bold; color: #475569; }
+    .score { color: #64748b; font-size: 0.9rem; }
+  </style>
+</head>
+<body>
+  <div class="game">
+    <h1>石头剪刀布</h1>
+    <div class="score">你: <span id="playerScore">0</span> | 电脑: <span id="cpuScore">0</span></div>
+    <div class="choices">
+      <button class="choice" onclick="play('✊')">✊</button>
+      <button class="choice" onclick="play('✌️')">✌️</button>
+      <button class="choice" onclick="play('✋')">✋</button>
+    </div>
+    <div class="result" id="result">选择一个出拳</div>
+    <div class="score" id="history"></div>
+  </div>
+  <script>
+    let player = 0, cpu = 0;
+    const choices = ['✊', '✌️', '✋'];
+    function play(playerChoice) {
+      const cpuChoice = choices[Math.floor(Math.random() * 3)];
+      let result = '';
+      if (playerChoice === cpuChoice) result = '平局！';
+      else if ((playerChoice === '✊' && cpuChoice === '✌️') || (playerChoice === '✌️' && cpuChoice === '✋') || (playerChoice === '✋' && cpuChoice === '✊')) { result = '你赢了！'; player++; }
+      else { result = '电脑赢了！'; cpu++; }
+      document.getElementById('result').textContent = `你: ${playerChoice} vs 电脑: ${cpuChoice} - ${result}`;
+      document.getElementById('playerScore').textContent = player;
+      document.getElementById('cpuScore').textContent = cpu;
+    }
+  </script>
+</body>
+</html>

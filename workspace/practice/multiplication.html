@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>九九乘法表</title>
+  <style>
+    body{font-family:sans-serif;padding:2rem;background:#f8fafc}
+    table{border-collapse:collapse;background:white;border-radius:8px;overflow:hidden}
+    td,th{padding:8px 12px;border:1px solid #e2e8f0;text-align:center}
+    tr:nth-child(odd) td{background:#f1f5f9}
+  </style>
+</head>
+<body>
+  <h2>✖️ 九九乘法表</h2>
+  <table id="table"></table>
+  <script>
+    let html='';
+    for(let i=1;i<=9;i++){
+      html+='<tr>';
+      for(let j=1;j<=i;j++){
+        html+=`<td>${j}×${i}=${i*j}</td>`;
+      }
+      html+='</tr>';
+    }
+    document.getElementById('table').innerHTML=html;
+  </script>
+</body>
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>汇率转换器</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #11998e, #38ef7d);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            width: 400px;
+        }
+        h1 { text-align: center; color: #333; margin-bottom: 20px; }
+        .input-group { margin-bottom: 15px; }
+        label { display: block; color: #666; margin-bottom: 5px; }
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        input:focus, select:focus { border-color: #11998e; outline: none; }
+        .result {
+            background: linear-gradient(135deg, #11998e, #38ef7d);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            margin-top: 20px;
+        }
+        .result-amount { font-size: 36px; font-weight: bold; }
+        .rate { font-size: 14px; opacity: 0.8; margin-top: 5px; }
+        .quick-btns { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 15px; }
+        .quick-btn {
+            padding: 5px 10px;
+            background: #f0f0f0;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        .quick-btn:hover { background: #ddd; }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="container">
+            <h1>💱 汇率转换器</h1>
+            
+            <div class="input-group">
+                <label>金额</label>
+                <input type="number" v-model="amount" @input="convert" placeholder="输入金额">
+            </div>
+            
+            <div class="input-group">
+                <label>从</label>
+                <select v-model="fromCurrency" @change="convert">
+                    <option v-for="c in currencies" :key="c.code" :value="c.code">{{ c.code }} - {{ c.name }}</option>
+                </select>
+            </div>
+            
+            <div class="input-group">
+                <label>到</label>
+                <select v-model="toCurrency" @change="convert">
+                    <option v-for="c in currencies" :key="c.code" :value="c.code">{{ c.code }} - {{ c.name }}</option>
+                </select>
+            </div>
+            
+            <div class="quick-btns">
+                <button class="quick-btn" @click="setAmount(100)">100</button>
+                <button class="quick-btn" @click="setAmount(500)">500</button>
+                <button class="quick-btn" @click="setAmount(1000)">1000</button>
+                <button class="quick-btn" @click="setAmount(5000)">5000</button>
+                <button class="quick-btn" @click="swap">🔄 交换货币</button>
+            </div>
+            
+            <div class="result" v-if="result">
+                <div class="result-amount">{{ result }}</div>
+                <div class="rate">汇率: 1 {{ fromCurrency }} = {{ rate.toFixed(4) }} {{ toCurrency }}</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const { createApp, ref } = Vue;
+        createApp({
+            setup() {
+                const amount = ref(100);
+                const fromCurrency = ref('USD');
+                const toCurrency = ref('CNY');
+                const result = ref('');
+                const rate = ref(7.2);
+                
+                // 模拟汇率（实际应从API获取）
+                const rates = {
+                    USD: { CNY: 7.2, EUR: 0.92, JPY: 149.5, GBP: 0.79, HKD: 7.82, KRW: 1320 },
+                    CNY: { USD: 0.14, EUR: 0.13, JPY: 20.8, GBP: 0.11, HKD: 1.09, KRW: 183 },
+                    EUR: { USD: 1.09, CNY: 7.85, JPY: 163, GBP: 0.86, HKD: 8.51, KRW: 1438 },
+                    JPY: { USD: 0.0067, CNY: 0.048, EUR: 0.0061, GBP: 0.0053, HKD: 0.052, KRW: 8.8 },
+                };
+                
+                const currencies = [
+                    { code: 'USD', name: '美元' },
+                    { code: 'CNY', name: '人民币' },
+                    { code: 'EUR', name: '欧元' },
+                    { code: 'JPY', name: '日元' },
+                    { code: 'GBP', name: '英镑' },
+                    { code: 'HKD', name: '港币' },
+                    { code: 'KRW', name: '韩元' },
+                ];
+                
+                const convert = () => {
+                    if (!amount.value) { result.value = ''; return; }
+                    const from = fromCurrency.value;
+                    const to = toCurrency.value;
+                    rate.value = rates[from]?.[to] || 1;
+                    result.value = (amount.value * rate.value).toFixed(2) + ' ' + to;
+                };
+                
+                const swap = () => {
+                    const temp = fromCurrency.value;
+                    fromCurrency.value = toCurrency.value;
+                    toCurrency.value = temp;
+                    convert();
+                };
+                
+                const setAmount = (v) => { amount.value = v; convert(); };
+                
+                convert();
+                
+                return { amount, fromCurrency, toCurrency, result, rate, currencies, convert, swap, setAmount };
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+{
+  "protocol": "gep-a2a",
+  "protocol_version": "1.0.0",
+  "message_type": "publish",
+  "message_id": "msg_pub_academic",
+  "sender_id": "hub_0f978bbe1fb5",
+  "timestamp": "2026-02-20T13:30:00Z",
+  "payload": {
+    "assets": [
+      {
+        "asset_id": "sha256:eea9e68bb262ad36b63eea24fd4891a39bcd2d58fd5c9e85e50925c8bb63db50",
+        "type": "Gene",
+        "summary": "Academic Research Assistant: Search papers from arXiv and Semantic Scholar, extract abstracts, generate literature review, analyze citations and research trends",
+        "category": "innovate",
+        "signals_match": ["academic_research", "paper_analysis", "literature_review", "arxiv", "semantic_scholar"],
+        "strategy": [
+          "Search academic papers from arXiv API",
+          "Extract paper titles, abstracts, authors, years",
+          "Generate literature review with insights",
+          "Analyze citation counts and research trends"
+        ]
+      },
+      {
+        "asset_id": "sha256:291f421a6edeccfa59866d2c76661e325681b635061eb9838fca96510afaa547",
+        "type": "Capsule",
+        "summary": "Academic Research Assistant for AI agents",
+        "content": "AcademicResearcher class with methods: searchPapers(query), searchArXiv(query, limit), research(topic, question), generateLiteratureReview(papers)",
+        "trigger": ["academic_research", "paper_analysis", "literature_review", "research_trends"],
+        "related_asset_id": "sha256:eea9e68bb262ad36b63eea24fd4891a39bcd2d58fd5c9e85e50925c8bb63db50",
+        "outcome": {
+          "status": "success",
+          "score": 0.95
+        }
+      }
+    ]
+  }
+}

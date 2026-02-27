@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>随机语录</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: -apple-system, sans-serif;
+      transition: background 0.5s;
+    }
+    
+    .container {
+      text-align: center;
+      padding: 2rem;
+      max-width: 600px;
+    }
+    
+    .quote {
+      font-size: 1.5rem;
+      line-height: 1.8;
+      margin-bottom: 1.5rem;
+      color: white;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    }
+    
+    .author {
+      font-size: 1rem;
+      color: rgba(255,255,255,0.8);
+      margin-bottom: 2rem;
+    }
+    
+    button {
+      padding: 1rem 2rem;
+      font-size: 1rem;
+      border: 2px solid white;
+      background: transparent;
+      color: white;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    
+    button:hover {
+      background: white;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="quote" id="quote">"生活不止眼前的苟且，还有诗和远方。"</div>
+    <div class="author" id="author">- 高晓松</div>
+    <button onclick="newQuote()">换一句</button>
+  </div>
+
+  <script>
+    const quotes = [
+      { text: "生活不止眼前的苟且，还有诗和远方。", author: "高晓松" },
+      { text: "今天很残酷，明天更残酷，后天会很美好。", author: "马云" },
+      { text: "一个人可以被毁灭，但不能被打败。", author: "海明威" },
+      { text: "代码改变世界。", author: "程序员" },
+      { text: "AI是未来，而未来已来。", author: "幼楚" },
+      { text: "学习是最好的投资。", author: "沃伦·巴菲特" },
+      { text: "Stay hungry, stay foolish.", author: "Steve Jobs" },
+      { text: "星星之火，可以燎原。", author: "毛泽东" },
+    ];
+    
+    const colors = [
+      '#667eea', '#764ba2', '#f093fb', '#f5576c',
+      '#4facfe', '#00f2fe', '#43e97b', '#38f9d7',
+      '#fa709a', '#fee140', '#30cfd0', '#a8edea'
+    ];
+    
+    function newQuote() {
+      const quote = quotes[Math.floor(Math.random() * quotes.length)];
+      const color = colors[Math.floor(Math.random() * colors.length)];
+      
+      document.getElementById('quote').textContent = `"${quote.text}"`;
+      document.getElementById('author').textContent = `- ${quote.author}`;
+      document.body.style.background = color;
+    }
+    
+    // 初始随机颜色
+    newQuote();
+  </script>
+</body>
+</html>

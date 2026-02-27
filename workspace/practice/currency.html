@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>幼楚的货币转换</title>
+  <style>
+    body { font-family: sans-serif; min-height: 100vh; background: #f8fafc; display: flex; justify-content: center; align-items: center; padding: 2rem; }
+    .converter { background: white; padding: 2rem; border-radius: 16px; max-width: 400px; }
+    h1 { color: #1e293b; text-align: center; }
+    select, input { width: 100%; padding: 0.75rem; margin: 0.5rem 0; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 1rem; }
+    .result { background: #3b82f6; color: white; padding: 1rem; border-radius: 8px; text-align: center; margin: 1rem 0; font-size: 1.25rem; }
+  </style>
+</head>
+<body>
+  <div class="converter">
+    <h1>💱 货币转换</h1>
+    <input type="number" id="amount" placeholder="金额" value="1">
+    <select id="from" onchange="convert()">
+      <option value="CNY">人民币 (CNY)</option>
+      <option value="USD">美元 (USD)</option>
+      <option value="EUR">欧元 (EUR)</option>
+      <option value="JPY">日元 (JPY)</option>
+      <option value="GBP">英镑 (GBP)</option>
+    </select>
+    <select id="to" onchange="convert()">
+      <option value="USD">美元 (USD)</option>
+      <option value="CNY">人民币 (CNY)</option>
+      <option value="EUR">欧元 (EUR)</option>
+      <option value="JPY">日元 (JPY)</option>
+      <option value="GBP">英镑 (GBP)</option>
+    </select>
+    <div class="result" id="result">1 CNY = 0.14 USD</div>
+  </div>
+  <script>
+    const rates = { CNY: 1, USD: 7.24, EUR: 7.85, JPY: 0.048, GBP: 9.12 };
+    function convert() {
+      const amt = parseFloat(document.getElementById('amount').value) || 0;
+      const from = document.getElementById('from').value;
+      const to = document.getElementById('to').value;
+      const result = (amt / rates[from]) * rates[to];
+      document.getElementById('result').textContent = `${amt} ${from} = ${result.toFixed(2)} ${to}`;
+    }
+  </script>
+</body>
+</html>

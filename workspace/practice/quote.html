@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>随机句子生成器</title>
+  <style>
+    body{font-family:system-ui,sans-serif;display:flex;justify-content:center;align-items:center;min-height:100vh;background:linear-gradient(135deg,#1e3a5f,#3b82f6)}
+    .card{background:white;padding:2rem;border-radius:16px;max-width:500px;text-align:center;box-shadow:0 10px40px rgba(0,0,0,0.3)}
+    h2{color:#1e293b;margin-bottom:1rem}
+    .quote{font-size:1.4rem;color:#475569;min-height:80px;display:flex;align-items:center;justify-content:center}
+    button{padding:1rem 2rem;background:#3b82f6;color:white;border:none;border-radius:8px;font-size:1rem;cursor:pointer;margin:0.5rem}
+    button:hover{background:#2563eb}
+    .tags{margin-top:1rem;display:flex;gap:0.5rem;justify-content:center;flex-wrap:wrap}
+    .tag{padding:0.3rem 0.8rem;background:#e2e8f0;border-radius:20px;font-size:0.8rem;color:#64748b;cursor:pointer}
+    .tag.active{background:#3b82f6;color:white}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>💭 随机句子生成器</h2>
+    <div class="quote" id="quote">点击按钮生成句子</div>
+    <button onclick="generate()">生成句子</button>
+    <div class="tags">
+      <span class="tag active" onclick="setCat('all')">全部</span>
+      <span class="tag" onclick="setCat('励志')">励志</span>
+      <span class="tag" onclick="setCat('爱情')">爱情</span>
+      <span class="tag" onclick="setCat('搞笑')">搞笑</span>
+    </div>
+  </div>
+  <script>
+    const quotes={
+      'all':['生活不止眼前的苟且，还有诗和远方。','今天最好的决定，就是开始努力。','失败是成功之母。','机会总是留给有准备的人。','坚持就是胜利。','梦想还是要有的，万一实现了呢。','活在当下，珍惜眼前。','每一次尝试都是成长。','相信自己，你可以的！','今天的不开心就到此为止吧。'],
+      '励志':['努力不一定成功，但不努力一定很轻松。','今天的努力是明天的收获。','坚持下去你就赢了。','没有伞的孩子必须努力奔跑。','与其仰望星空，不如脚踏实地。','你若盛开，蝴蝶自来。'],
+      '爱情':['陪伴是最长情的告白。','遇见你是最美的意外。','love is not about how long, but how deep.','有你的日子，每天都是情人节。','执子之手，与子偕老。'],
+      '搞笑':['我不是胖，我只是可爱的膨胀了。','别人都是宝藏女孩，我是饭桶。','与其反思自己，不如指责别人。','只要我没道德，道德就绑架不了我。','每天早上起床第一句，先给自己打个气。']
+    };
+    let cat='all';
+    function setCat(c){cat=c;document.querySelectorAll('.tag').forEach(t=>t.classList.remove('active'));event.target.classList.add('active');}
+    function generate(){
+      const list=quotes[cat];
+      document.getElementById('quote').innerText=list[Math.floor(Math.random()*list.length)];
+    }
+  </script>
+</body>
+</html>

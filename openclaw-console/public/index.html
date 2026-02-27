@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="description" content="OpenClaw AI Agent Desktop Client">
+  <meta name="theme-color" content="#3b82f6">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="OpenClaw">
+  
+  <title>OpenClaw Console</title>
+  
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="/manifest.json">
+  <link rel="apple-touch-icon" href="/icon-192.png">
+  
+  <!-- 预连接 -->
+  <link rel="preconnect" href="http://localhost:18789">
+  
+  <style>
+    /* 加载动画 */
+    .loader {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: #f8fafc;
+      z-index: 9999;
+    }
+    
+    .loader-spinner {
+      width: 48px;
+      height: 48px;
+      border: 3px solid #e2e8f0;
+      border-top-color: #3b82f6;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    
+    .loader-text {
+      margin-top: 16px;
+      color: #64748b;
+      font-size: 14px;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    
+    /* 离线提示 */
+    .offline {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 8px 16px;
+      background: #fef3c7;
+      color: #92400e;
+      border-radius: 8px;
+      font-size: 14px;
+      z-index: 9998;
+      display: none;
+    }
+    
+    .offline.show {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div id="root">
+    <div class="loader">
+      <div class="loader-spinner"></div>
+      <div class="loader-text">加载中...</div>
+    </div>
+  </div>
+  
+  <div class="offline" id="offlineToast">
+    📡 您当前处于离线状态
+  </div>
+
+  <script>
+    // 离线检测
+    function updateOnlineStatus() {
+      const toast = document.getElementById('offlineToast')
+      if (!navigator.onLine) {
+        toast.classList.add('show')
+      } else {
+        toast.classList.remove('show')
+      }
+    }
+    
+    window.addEventListener('online', updateOnlineStatus)
+    window.addEventListener('offline', updateOnlineStatus)
+    updateOnlineStatus()
+
+    // 注册 Service Worker
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+          .then((registration) => {
+            console.log('SW registered:', registration.scope)
+          })
+          .catch((error) => {
+            console.log('SW registration failed:', error)
+          })
+      })
+    }
+  </script>
+</body>
+</html>

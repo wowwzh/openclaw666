@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>幼楚的记忆卡片</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, sans-serif; min-height: 100vh; background: #f8fafc; display: flex; justify-content: center; align-items: center; }
+    .container { max-width: 400px; padding: 2rem; }
+    .card { background: white; border-radius: 16px; padding: 2rem; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.1); min-height: 200px; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+    .question { font-size: 1.25rem; color: #1e293b; margin-bottom: 1.5rem; font-weight: 500; }
+    .answer { font-size: 1rem; color: #64748b; display: none; }
+    .answer.show { display: block; }
+    .btns { display: flex; gap: 0.5rem; margin-top: 1.5rem; }
+    button { padding: 0.75rem 1.5rem; border: none; border-radius: 8px; cursor: pointer; font-size: 0.9rem; }
+    .show { background: #3b82f6; color: white; }
+    .next { background: #10b981; color: white; }
+    .nav { display: flex; justify-content: space-between; margin-top: 1rem; }
+    .nav button { background: #f1f5f9; color: #64748b; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card" id="card">
+      <div class="question" id="question">点击显示答案</div>
+      <div class="answer" id="answer"></div>
+      <div class="btns">
+        <button class="show" onclick="toggle()">显示/隐藏</button>
+        <button class="next" onclick="next()">下一题</button>
+      </div>
+      <div class="nav">
+        <button onclick="prev()">← 上一题</button>
+        <span id="progress" style="color:#94a3b8;align-self:center">1/5</span>
+        <button onclick="next()">下一题 →</button>
+      </div>
+    </div>
+  </div>
+  <script>
+    const cards = [
+      { q: "React的核心概念是什么？", a: "组件化、虚拟DOM、单项数据流" },
+      { q: "什么是Hooks？", a: "让函数组件拥有状态和其他React特性的函数" },
+      { q: "useEffect的用途？", a: "处理副作用：数据获取、订阅、DOM操作" },
+      { q: "Zustand是什么？", a: "轻量级React状态管理库" },
+      { q: "什么是Code Splitting？", a: "代码分割，按需加载，提升性能" }
+    ];
+    let i = 0;
+    function render() {
+      document.getElementById('question').textContent = cards[i].q;
+      document.getElementById('answer').textContent = cards[i].a;
+      document.getElementById('answer').classList.remove('show');
+      document.getElementById('progress').textContent = (i+1) + '/' + cards.length;
+    }
+    function toggle() { document.getElementById('answer').classList.toggle('show'); }
+    function next() { i = (i + 1) % cards.length; render(); }
+    function prev() { i = (i - 1 + cards.length) % cards.length; render(); }
+    render();
+  </script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>历史上的今天</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      min-height: 100vh;
+      padding: 2rem;
+    }
+    .container { max-width: 600px; margin: 0 auto; }
+    h1 {
+      text-align: center;
+      color: #2c3e50;
+      margin-bottom: 2rem;
+    }
+    .event {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 12px;
+      margin-bottom: 1rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .year {
+      color: #3498db;
+      font-weight: bold;
+      font-size: 1.1rem;
+    }
+    .desc { color: #555; margin-top: 0.5rem; line-height: 1.6; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>📅 历史上的今天</h1>
+    <div id="events"></div>
+  </div>
+  <script>
+    const events = [
+      { year: 1972, desc: '美国发射先锋10号探测器' },
+      { year: 1997, desc: '英国克隆羊多利问世' },
+      { year: 2003, desc: '中国首次成功载人航天飞行' },
+    ];
+    document.getElementById('events').innerHTML = events.map(e => `
+      <div class="event">
+        <div class="year">${e.year}年</div>
+        <div class="desc">${e.desc}</div>
+      </div>
+    `).join('');
+  </script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+{
+  "update_time": "2026-02-25 21:34:44",
+  "brief_date": "2026年02月25日",
+  "weather": {
+    "error": "获取天气失败: <urlopen error _ssl.c:989: The handshake operation timed out>"
+  },
+  "news": {
+    "chinese": [
+      {
+        "title": "AI Agent 成为 2026 年科技焦点",
+        "url": "https://tech.36kr.com",
+        "content": "各大科技公司纷纷推出 AI Agent 产品，",
+        "source": "科技趋势"
+      },
+      {
+        "title": "OpenClaw 社区活跃度创新高",
+        "url": "https://github.com/openclaw/openclaw",
+        "content": "开源 AI 助手 OpenClaw 用户增长迅速，",
+        "source": "开源动态"
+      },
+      {
+        "title": "中国 AI 芯片产能持续提升",
+        "url": "https://tech.sina.com.cn",
+        "content": "国产 AI 芯片传来好消息，",
+        "source": "硬件"
+      }
+    ],
+    "english": [],
+    "total": 3
+  },
+  "greeting": "晚上好！🌙"
+}

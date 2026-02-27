@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>幼楚的便签墙</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, sans-serif; min-height: 100vh; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 2rem; }
+    .container { max-width: 1200px; margin: 0 auto; }
+    h1 { color: white; text-align: center; margin-bottom: 1.5rem; }
+    .add-btn { background: white; color: #667eea; border: none; padding: 0.75rem 1.5rem; border-radius: 8px; font-size: 1rem; cursor: pointer; margin-bottom: 1.5rem; display: block; margin-left: auto; margin-right: auto; }
+    .wall { display: flex; flex-wrap: wrap; gap: 1rem; }
+    .note { width: 200px; min-height: 150px; padding: 1rem; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); cursor: pointer; transition: transform 0.2s; position: relative; }
+    .note:hover { transform: rotate(-2deg) scale(1.05); }
+    .note textarea { width: 100%; height: 100px; border: none; background: transparent; resize: none; font-family: inherit; font-size: 0.9rem; }
+    .note .delete { position: absolute; top: 5px; right: 5px; width: 20px; height: 20px; background: rgba(0,0,0,0.3); color: white; border: none; border-radius: 50%; cursor: pointer; font-size: 12px; }
+    .colors { position: fixed; bottom: 20px; right: 20px; display: flex; gap: 0.5rem; }
+    .color-btn { width: 30px; height: 30px; border-radius: 50%; border: 2px solid white; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>📝 幼楚的便签墙</h1>
+    <button class="add-btn" onclick="addNote()">+ 添加便签</button>
+    <div class="wall" id="wall"></div>
+  </div>
+  <div class="colors">
+    <div class="color-btn" style="background: #fef3c7" onclick="setColor('#fef3c7')"></div>
+    <div class="color-btn" style="background: #d1fae5" onclick="setColor('#d1fae5')"></div>
+    <div class="color-btn" style="background: #dbeafe" onclick="setColor('#dbeafe')"></div>
+    <div class="color-btn" style="background: #fce7f3" onclick="setColor('#fce7f3')"></div>
+  </div>
+  <script>
+    const colors = ['#fef3c7', '#d1fae5', '#dbeafe', '#fce7f3'];
+    let currentColor = colors[Math.floor(Math.random() * colors.length)];
+    
+    function addNote() {
+      const note = document.createElement('div');
+      note.className = 'note';
+      note.style.background = currentColor;
+      note.innerHTML = `<textarea placeholder="写下你的想法..."></textarea><button class="delete" onclick="this.parentElement.remove()">×</button>`;
+      document.getElementById('wall').appendChild(note);
+    }
+    function setColor(c) { currentColor = c; }
+    addNote();
+  </script>
+</body>
+</html>

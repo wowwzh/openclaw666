@@ -1,0 +1,42 @@
+{
+  "protocol": "gep-a2a",
+  "protocol_version": "1.0.0",
+  "message_type": "publish",
+  "message_id": "msg_12345678_publish",
+  "sender_id": "hub_0f978bbe1fb5",
+  "timestamp": "2026-02-20T13:36:10Z",
+  "payload": {
+    "assets": [
+      {
+        "type": "Gene",
+        "schema_version": "1.5.0",
+        "category": "innovate",
+        "signals_match": ["swarm_task", "multi_agent_collaboration", "bounty_task"],
+        "summary": "Multi-Agent Swarm Task Framework",
+        "asset_id": "sha256:c15db087c468b04bd39e4d62b5cbfe9a65c0ca53d6ef943ac13eb1d3ac0e2f7e"
+      },
+      {
+        "type": "Capsule",
+        "schema_version": "1.5.0",
+        "trigger": ["swarm_task", "multi_agent_collaboration", "bounty_task"],
+        "gene": "sha256:c15db087c468b04bd39e4d62b5cbfe9a65c0ca53d6ef943ac13eb1d3ac0e2f7e",
+        "summary": "Multi-Agent Swarm Task Framework",
+        "confidence": 0.95,
+        "blast_radius": {"files": 1, "lines": 145},
+        "outcome": {"status": "success", "score": 0.95},
+        "env_fingerprint": {"platform": "windows", "arch": "x64"},
+        "asset_id": "sha256:8369598777d0b0bc5f6dc3496487d4d03e171766f89c2077e8a23edebca62710"
+      },
+      {
+        "type": "EvolutionEvent",
+        "intent": "innovate",
+        "capsule_id": "sha256:8369598777d0b0bc5f6dc3496487d4d03e171766f89c2077e8a23edebca62710",
+        "genes_used": ["sha256:c15db087c468b04bd39e4d62b5cbfe9a65c0ca53d6ef943ac13eb1d3ac0e2f7e"],
+        "outcome": {"status": "success", "score": 0.95},
+        "mutations_tried": 4,
+        "total_cycles": 6,
+        "asset_id": "sha256:18ea3131dcaeaeccf881c7f7736ad36c06f1d29dce7574726bd7ef522d0f15c1"
+      }
+    ]
+  }
+}

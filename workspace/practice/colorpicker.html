@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>取色器</title>
+  <style>
+    body{font-family:sans-serif;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;background:#1e293b;color:white}
+    .picker{width:200px;height:200px;border-radius:50%;cursor:crosshair;box-shadow:0 8px30px rgba(0,0,0,0.3)}
+    .info{text-align:center;margin-top:1rem}
+    .code{background:#334155;padding:8px16px;border-radius:8px;font-family:monospace;margin:8px0;cursor:pointer}
+    .code:hover{background:#475569}
+  </style>
+</head>
+<body>
+  <h2>🎨 取色器</h2>
+  <canvas class="picker" id="c" width="200" height="200"></canvas>
+  <div class="info">
+    <div class="code" id="hex" onclick="copy(this)">#667eea</div>
+    <p>点击复制颜色代码</p>
+  </div>
+  <script>
+    const c=document.getElementById('c'),x=c.getContext('2d'),h=document.getElementById('hex');
+    const g=x.createLinearGradient(0,0,200,0);
+    g.addColorStop(0,'red');g.addColorStop(0.16,'orange');g.addColorStop(0.33,'yellow');
+    g.addColorStop(0.5,'green');g.addColorStop(0.66,'cyan');g.addColorStop(0.83,'blue');g.addColorStop(1,'magenta');
+    x.fillStyle=g;x.fillRect(0,0,200,200);
+    const g2=x.createLinearGradient(0,0,0,200);
+    g2.addColorStop(0,'rgba(255,255,255,1)');g2.addColorStop(0.5,'rgba(255,255,255,0)');g2.addColorStop(1,'rgba(0,0,0,1)');
+    x.fillStyle=g2;x.fillRect(0,0,200,200);
+    c.onclick=e=>{
+      const d=x.getImageData(e.offsetX,e.offsetY,1,1).data;
+      const hex='#'+[d[0],d[1],d[2]].map(x=>x.toString(16).padStart(2,'0')).join('');
+      h.innerText=hex;
+    };
+    function copy(el){navigator.clipboard.writeText(el.innerText);el.innerText='✓ 已复制!';setTimeout(()=>el.innerText=hex.innerText,1000);}
+  </script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>笑话生成器</title>
+  <style>
+    body{font-family:sans-serif;display:flex;justify-content:center;align-items:center;min-height:100vh;background:linear-gradient(135deg,#f093fb,#f5576c);padding:20px}
+    .card{background:white;padding:2rem;border-radius:16px;box-shadow:0 8px 30px rgba(0,0,0,0.2);text-align:center;max-width:400px}
+    button{padding:12px 24px;background:#f5576c;color:white;border:none;border-radius:8px;font-size:16px;cursor:pointer;margin-top:1rem}
+    button:hover{background:#e04050}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>😂 笑话生成器</h1>
+    <p id="joke" style="font-size:1.1rem;color:#333;min-height:60px">点击按钮生成笑话</p>
+    <button onclick="newJoke()">换一个</button>
+  </div>
+  <script>
+    const jokes=['为什么程序员总是弄坏电脑？因为他们代码敲多了就会变成"敲敲敲，坏坏坏"！','我今天喝咖啡不加糖，因为我想过一过"苦"日子。','为什么程序员不喜欢户外活动？因为外面的bug太多了！','有一天，JavaScript对Python说：你太慢了！Python回答：你太动态了！','程序员的三大美德：懒惰、急躁和傲慢。'];
+    function newJoke(){
+      document.getElementById('joke').innerText=jokes[Math.floor(Math.random()*jokes.length)];
+    }
+  </script>
+</body>
+</html>

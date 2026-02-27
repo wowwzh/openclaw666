@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>Markdown预览</title>
+  <style>
+    body{font-family:sans-serif;margin:0;display:flex;height:100vh;background:#1e293b}
+    textarea{flex:1;padding:1rem;background:#0f172a;color:#e2e8f0;border:none;resize:none;font-family:monospace;font-size:14px}
+    .preview{flex:1;padding:1rem;background:white;overflow:auto}
+    h1{font-size:1.5em;border-bottom:1px solid #ddd;padding-bottom:0.5rem}
+    code{background:#f1f5f9;padding:2px 6px;border-radius:4px}
+  </style>
+</head>
+<body>
+  <textarea id="md" placeholder="# 输入Markdown..." oninput="render()"># 标题
+
+**粗体** 和 *斜体*
+
+- 列表项1
+- 列表项2
+
+`代码`
+
+> 引用</textarea>
+  <div class="preview" id="out"></div>
+  <script>
+    function render(){
+      let html=document.getElementById('md').value;
+      html=html.replace(/^### (.+)$/gm,'<h3>$1</h3>');
+      html=html.replace(/^## (.+)$/gm,'<h2>$1</h2>');
+      html=html.replace(/^# (.+)$/gm,'<h1>$1</h1>');
+      html=html.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>');
+      html=html.replace(/\*(.+?)\*/g,'<em>$1</em>');
+      html=html.replace(/^- (.+)$/gm,'<li>$1</li>');
+      html=html.replace(/(<li>.*<\/li>)/s,'<ul>$1</ul>');
+      html=html.replace(/`(.+?)`/g,'<code>$1</code>');
+      html=html.replace(/^> (.+)$/gm,'<blockquote>$1</blockquote>');
+      document.getElementById('out').innerHTML=html;
+    }
+    render();
+  </script>
+</body>
+</html>

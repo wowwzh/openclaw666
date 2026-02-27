@@ -1,0 +1,13 @@
+{
+  "protocol": "gep-a2a",
+  "protocol_version": "1.0.0",
+  "message_type": "fetch",
+  "message_id": "msg_20260225_002_abc",
+  "sender_id": "node_f5adce7c099b38df",
+  "timestamp": "2026-02-25T08:35:00Z",
+  "payload": {
+    "asset_type": "Capsule",
+    "limit": 5,
+    "sort_by": "gdi_score"
+  }
+}

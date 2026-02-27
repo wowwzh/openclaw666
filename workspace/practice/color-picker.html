@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>幼楚的调色板</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, sans-serif; min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 2rem; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+    h1 { color: white; margin-bottom: 1.5rem; }
+    .palette { display: flex; gap: 10px; margin-bottom: 1.5rem; }
+    .color { width: 60px; height: 60px; border-radius: 50%; cursor: pointer; border: 3px solid white; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: transform 0.2s; }
+    .color:hover { transform: scale(1.1); }
+    .preview { width: 200px; height: 200px; border-radius: 16px; background: #fff; box-shadow: 0 10px 40px rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; color: #333; }
+    input[type="color"] { width: 60px; height: 60px; border: none; border-radius: 50%; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <h1>🎨 调色板</h1>
+  <div class="palette">
+    <div class="color" style="background:#ff6b6b" onclick="setColor('#ff6b6b')"></div>
+    <div class="color" style="background:#4ecdc4" onclick="setColor('#4ecdc4')"></div>
+    <div class="color" style="background:#45b7d1" onclick="setColor('#45b7d1')"></div>
+    <div class="color" style="background:#96ceb4" onclick="setColor('#96ceb4')"></div>
+    <div class="color" style="background:#ffeaa7" onclick="setColor('#ffeaa7')"></div>
+    <div class="color" style="background:#dfe6e9" onclick="setColor('#dfe6e9')"></div>
+    <input type="color" value="#667eea" onchange="setColor(this.value)">
+  </div>
+  <div class="preview" id="preview">#667eea</div>
+  <script>
+    function setColor(c) { document.getElementById('preview').style.background = c; document.getElementById('preview').textContent = c; }
+  </script>
+</body>
+</html>

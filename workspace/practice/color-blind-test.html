@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>幼楚的色盲测试</title>
+  <style>
+    body { font-family: sans-serif; min-height: 100vh; background: #f8fafc; display: flex; justify-content: center; align-items: center; padding: 2rem; }
+    .container { background: white; padding: 2rem; border-radius: 16px; max-width: 500px; text-align: center; }
+    h1 { color: #1e293b; margin-bottom: 1rem; }
+    .plates { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin: 1rem 0; }
+    .plate { width: 80px; height: 80px; border-radius: 8px; cursor: pointer; transition: transform 0.2s; }
+    .plate:hover { transform: scale(1.05); }
+    .result { margin-top: 1rem; font-size: 1.25rem; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🎨 色盲测试</h1>
+    <p>你能看到图中的数字吗？</p>
+    <div class="plates">
+      <div class="plate" style="background:#c68b59" onclick="check(1)"></div>
+      <div class="plate" style="background:#5a8c3a" onclick="check(2)"></div>
+      <div class="plate" style="background:#8b5a5a" onclick="check(3)"></div>
+    </div>
+    <div class="result" id="result">点击圆块查看答案</div>
+  </div>
+  <script>
+    const answers = {1:'正常:12, 红绿色盲:看不到', 2:'正常:8, 全色盲:看不到', 3:'正常:29, 红绿色盲:看不到'};
+    function check(n) { document.getElementById('result').textContent = answers[n]; }
+  </script>
+</body>
+</html>

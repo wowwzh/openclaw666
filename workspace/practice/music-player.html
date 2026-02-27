@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>悬浮音乐播放器</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:system-ui;background:linear-gradient(135deg,#1a1a2e,#16213e);min-height:100vh;display:flex;justify-content:center;align-items:center}
+    .player{width:320px;background:rgba(255,255,255,0.1);backdrop-filter:blur(10px);border-radius:16px;padding:20px;color:white}
+    .cover{width:100%;aspect-ratio:1;border-radius:12px;object-fit:cover;margin-bottom:1rem;box-shadow:0 8px32px rgba(0,0,0,0.3)}
+    .title{font-size:1.2rem;font-weight:bold;margin-bottom:0.3rem}
+    .artist{font-size:0.9rem;opacity:0.7;margin-bottom:1rem}
+    .progress{height:4px;background:rgba(255,255,255,0.2);border-radius:2px;margin-bottom:1rem;cursor:pointer}
+    .progress-bar{height:100%;background:linear-gradient(90deg,#f093fb,#f5576c);border-radius:2px;width:35%}
+    .time{display:flex;justify-content:space-between;font-size:0.8rem;opacity:0.6;margin-bottom:1rem}
+    .controls{display:flex;justify-content:center;gap:1rem;align-items:center}
+    .controls button{background:none;border:none;color:white;font-size:1.5rem;cursor:pointer;transition:transform 0.2s}
+    .controls button:hover{transform:scale(1.2)}
+    .controls .play{width:50px;height:50px;background:linear-gradient(135deg,#f093fb,#f5576c);border-radius:50%;font-size:1.2rem}
+    .playlist{margin-top:1rem;border-top:1px solid rgba(255,255,255,0.1);padding-top:1rem}
+    .song{padding:0.5rem;display:flex;justify-content:space-between;opacity:0.7;cursor:pointer}
+    .song:hover,.song.active{opacity:1;background:rgba(255,255,255,0.1);border-radius:4px}
+  </style>
+</head>
+<body>
+  <div class="player">
+    <img class="cover" src="https://picsum.photos/300?random=1">
+    <div class="title">深夜播放器</div>
+    <div class="artist">沈幼楚点歌台</div>
+    <div class="progress"><div class="progress-bar"></div></div>
+    <div class="time"><span>1:23</span><span>4:05</span></div>
+    <div class="controls">
+      <button>⏮</button>
+      <button class="play">▶</button>
+      <button>⏭</button>
+    </div>
+    <div class="playlist">
+      <div class="song active"><span>🎵 夜空中最亮的星</span><span>3:45</span></div>
+      <div class="song"><span>🎵 平凡之路</span><span>4:12</span></div>
+      <div class="song"><span>🎵 岁月神偷</span><span>3:30</span></div>
+    </div>
+  </div>
+</body>
+</html>

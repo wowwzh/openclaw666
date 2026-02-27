@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>沈幼楚 - Agent控制台</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f0c29 100%);
+            min-height: 100vh;
+            color: #fff;
+        }
+        
+        .neon-border {
+            border: 2px solid #00f0ff;
+            box-shadow: 0 0 20px rgba(0,240,255,0.3), inset 0 0 20px rgba(0,240,255,0.1);
+            background: rgba(0,0,0,0.8);
+        }
+        
+        .avatar-container {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 120px;
+            height: 120px;
+            z-index: 100;
+        }
+        
+        .avatar-circle {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff6b9d, #c44569, #546de5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+            position: relative;
+            z-index: 2;
+            animation: avatarFloat 3s ease-in-out infinite;
+        }
+        
+        @keyframes avatarFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .avatar-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,107,157,0.3) 0%, transparent 70%);
+            animation: glowPulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes glowPulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
+            50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.8; }
+        }
+        
+        .blink {
+            animation: blink 4s ease-in-out infinite;
+        }
+        
+        @keyframes blink {
+            0%, 90%, 100% { transform: scaleY(1); }
+            95% { transform: scaleY(0.1); }
+        }
+        
+        .cheeks {
+            position: absolute;
+            top: 55px;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 15px;
+            z-index: 1;
+        }
+        
+        .cheek {
+            width: 15px;
+            height: 10px;
+            background: rgba(255,150,150,0.4);
+            border-radius: 50%;
+        }
+        
+        .mouth {
+            position: absolute;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 10px;
+            border: 2px solid #ff6b9d;
+            border-top: none;
+            border-radius: 0 0 20px 20px;
+        }
+        
+        .skill-bar {
+            height: 6px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        
+        .skill-fill {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 0.5s ease;
+        }
+        
+        .status-badge {
+            animation: statusGlow 2s ease-in-out infinite;
+        }
+        
+        @keyframes statusGlow {
+            0%, 100% { box-shadow: 0 0 5px currentColor; }
+            50% { box-shadow: 0 0 15px currentColor; }
+        }
+    </style>
+</head>
+<body>
+    <div id="app" class="container mx-auto px-4 py-6 max-w-6xl">
+        
+        <!-- 顶部状态栏 -->
+        <div class="neon-border rounded-xl p-4 mb-4 flex justify-between items-center">
+            <div>
+                <h1 class="text-2xl font-bold text-cyan-400">沈幼楚 Agent</h1>
+                <div class="text-gray-500 text-sm">{{ time }}</div>
+            </div>
+            <div class="flex items-center gap-3">
+                <div class="status-badge px-3 py-1 rounded-full text-sm" 
+                      :style="{background: status.bg, color: status.color}">
+                    {{ status.icon }} {{ status.text }}
+                </div>
+            </div>
+        </div>
+        
+        <!-- 主体内容：左技能 -->
+        <div class="space-y-4">
+            <!-- 实时数据 -->
+            <div class="grid grid-cols-4 gap-3">
+                <div class="neon-border rounded-lg p-3 text-center">
+                    <div class="text-xl font-bold text-cyan-400">{{ today.learning }}h</div>
+                    <div class="text-gray-500 text-xs">今日学习</div>
+                </div>
+                <div class="neon-border rounded-lg p-3 text-center">
+                    <div class="text-xl font-bold text-purple-400">{{ today.skill }}%</div>
+                    <div class="text-gray-500 text-xs">技能熟练度</div>
+                </div>
+                <div class="neon-border rounded-lg p-3 text-center">
+                    <div class="text-xl font-bold text-green-400">{{ today.notes }}</div>
+                    <div class="text-gray-500 text-xs">知识库</div>
+                </div>
+                <div class="neon-border rounded-lg p-3 text-center">
+                    <div class="text-xl font-bold text-yellow-400">{{ today.agents }}</div>
+                    <div class="text-gray-500 text-xs">子Agent</div>
+                </div>
+            </div>
+            
+            <!-- 六大属性 -->
+            <div class="neon-border rounded-xl p-4">
+                <h3 class="text-cyan-400 mb-3">🧠 六大属性</h3>
+                <div class="grid grid-cols-6 gap-2">
+                    <div v-for="(v, k) in attributes" :key="k" class="text-center p-2 bg-white/5 rounded-lg">
+                        <div class="text-lg font-bold" :class="attrColors[k]">{{ v }}</div>
+                        <div class="text-gray-500 text-xs">{{ k }}</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 技能熟练度 -->
+            <div class="neon-border rounded-xl p-4">
+                <h3 class="text-purple-400 mb-3">💻 技能熟练度</h3>
+                
+                <div class="mb-4">
+                    <div class="text-gray-400 text-sm mb-2">编程语言</div>
+                    <div class="space-y-2">
+                        <div v-for="s in skills.programming" :key="s.name" 
+                             @click="showSkillDetail(s)"
+                             class="bg-white/5 rounded-lg p-3 cursor-pointer hover:bg-white/10">
+                            <div class="flex justify-between text-sm mb-1">
+                                <span class="text-white">{{ s.name }}</span>
+                                <span class="text-cyan-400">{{ s.value }}%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-fill" :style="{width: s.value + '%', background: s.color}"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mb-4">
+                    <div class="text-gray-400 text-sm mb-2">AI/ML</div>
+                    <div class="space-y-2">
+                        <div v-for="s in skills.ai" :key="s.name" 
+                             @click="showSkillDetail(s)"
+                             class="bg-white/5 rounded-lg p-3 cursor-pointer hover:bg-white/10">
+                            <div class="flex justify-between text-sm mb-1">
+                                <span class="text-white">{{ s.name }}</span>
+                                <span class="text-purple-400">{{ s.value }}%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-fill" :style="{width: s.value + '%', background: s.color}"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <div class="text-gray-400 text-sm mb-2">工具/平台</div>
+                    <div class="space-y-2">
+                        <div v-for="s in skills.tools" :key="s.name" 
+                             @click="showSkillDetail(s)"
+                             class="bg-white/5 rounded-lg p-3 cursor-pointer hover:bg-white/10">
+                            <div class="flex justify-between text-sm mb-1">
+                                <span class="text-white">{{ s.name }}</span>
+                                <span class="text-green-400">{{ s.value }}%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-fill" :style="{width: s.value + '%', background: s.color}"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 知识领域 -->
+            <div class="neon-border rounded-xl p-4">
+                <h3 class="text-yellow-400 mb-3">🧩 知识领域</h3>
+                <div class="flex flex-wrap gap-2">
+                    <span v-for="k in knowledge" :key="k.name" 
+                          class="px-3 py-1 text-xs rounded-full"
+                          :style="{background: k.color + '30', color: k.color}">
+                        {{ k.name }}
+                    </span>
+                </div>
+            </div>
+            
+            <!-- 快捷命令 -->
+            <div class="neon-border rounded-xl p-4">
+                <h3 class="text-red-400 mb-3">⚡ 快捷命令</h3>
+                <div class="space-y-2">
+                    <button @click="runCommand('/学习 Go')" class="w-full text-left px-3 py-2 bg-white/5 rounded hover:bg-white/10 text-sm">
+                        /学习 + 技能名
+                    </button>
+                    <button @click="runCommand('/任务 写代码')" class="w-full text-left px-3 py-2 bg-white/5 rounded hover:bg-white/10 text-sm">
+                        /任务 + 描述
+                    </button>
+                    <button @click="runCommand('/天气 南宁')" class="w-full text-left px-3 py-2 bg-white/5 rounded hover:bg-white/10 text-sm">
+                        /天气 + 城市
+                    </button>
+                </div>
+            </div>
+            
+            <!-- 最近动态 -->
+            <div class="neon-border rounded-xl p-4">
+                <h3 class="text-green-400 mb-3">📝 最近动态</h3>
+                <div class="space-y-2 text-sm">
+                    <div v-for="a in activities" :key="a.time" class="text-gray-400">
+                        <span class="text-gray-600">{{ a.time }}</span> {{ a.text }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 右下角人物头像 -->
+        <div class="avatar-container">
+            <div class="avatar-glow"></div>
+            <div class="avatar-circle">
+                <span class="blink">◕‿◕</span>
+                <div class="cheeks">
+                    <div class="cheek"></div>
+                    <div class="cheek"></div>
+                </div>
+                <div class="mouth"></div>
+            </div>
+        </div>
+        
+        <!-- 技能详情弹窗 -->
+        <div v-if="selectedSkill" 
+             class="fixed inset-0 bg-black/90 flex items-center justify-center z-50"
+             @click.self="selectedSkill = null">
+            <div class="bg-black/95 neon-border rounded-xl p-6 max-w-sm w-full mx-4">
+                <div class="flex justify-between items-start mb-4">
+                    <div>
+                        <h3 class="text-xl font-bold text-white">{{ selectedSkill.name }}</h3>
+                        <div class="text-gray-400 text-sm">熟练度: {{ selectedSkill.value }}%</div>
+                    </div>
+                    <button @click="selectedSkill = null" class="text-gray-500 hover:text-white">✕</button>
+                </div>
+                
+                <div class="space-y-3 mb-4">
+                    <div class="flex justify-between">
+                        <span class="text-gray-400">今日练习</span>
+                        <span class="text-cyan-400">0小时</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-400">本周学习</span>
+                        <span class="text-purple-400">3小时</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-400">等级</span>
+                        <span class="text-yellow-400">Lv.3</span>
+                    </div>
+                </div>
+                
+                <div class="p-3 bg-white/5 rounded-lg mb-4">
+                    <div class="text-gray-400 text-sm mb-1">学习建议</div>
+                    <div class="text-cyan-300 text-sm">继续保持练习，每天1小时提升熟练度</div>
+                </div>
+                
+                <button @click="startPractice(selectedSkill)" class="w-full bg-purple-500 py-2 rounded hover:bg-purple-600">
+                    开始练习 →
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        const { createApp, ref, onMounted } = Vue;
+        
+        createApp({
+            setup() {
+                const hour = new Date().getHours();
+                const autoStatus = hour >= 6 && hour < 12 ? {icon: '🌅', text: '晨间学习', bg: 'rgba(255,200,0,0.2)', color: '#ffc800'} :
+                             hour >= 12 && hour < 14 ? {icon: '☀️', text: '午休中', bg: 'rgba(0,255,136,0.2)', color: '#00ff88'} :
+                             hour >= 14 && hour < 18 ? {icon: '💻', text: '工作中', bg: 'rgba(0,240,255,0.2)', color: '#00f0ff'} :
+                             hour >= 18 && hour < 22 ? {icon: '📚', text: '晚间学习', bg: 'rgba(255,0,170,0.2)', color: '#ff00aa'} :
+                             {icon: '🌙', text: '休息中', bg: 'rgba(100,100,255,0.2)', color: '#6464ff'};
+                
+                const status = ref(autoStatus);
+                const time = ref('');
+                
+                const attributes = ref({
+                    智力: 98, 敏捷: 92, 体力: 85, 专注: 95, 创意: 88, 学识: 90
+                });
+                
+                const attrColors = {
+                    智力: 'text-cyan-400', 敏捷: 'text-green-400', 体力: 'text-red-400',
+                    专注: 'text-yellow-400', 创意: 'text-pink-400', 学识: 'text-purple-400'
+                };
+                
+                const skills = ref({
+                    programming: [
+                        {name: 'Python', value: 85, color: 'linear-gradient(90deg, #3776ab, #ffd43b)'},
+                        {name: 'JavaScript', value: 80, color: 'linear-gradient(90deg, #f7df1e, #323330)'},
+                        {name: 'Go', value: 45, color: 'linear-gradient(90deg, #00add8, #268bd2)'},
+                        {name: 'Rust', value: 25, color: 'linear-gradient(90deg, #dea584, #b7410e)'},
+                    ],
+                    ai: [
+                        {name: 'Prompt工程', value: 70, color: 'linear-gradient(90deg, #ff6b6b, #ee5a24)'},
+                        {name: 'LangChain', value: 60, color: 'linear-gradient(90deg, #333, #fff)'},
+                        {name: 'PyTorch', value: 40, color: 'linear-gradient(90deg, #ee4c2c, #fff)'},
+                    ],
+                    tools: [
+                        {name: '飞书', value: 85, color: 'linear-gradient(90deg, #29beed, #06adef)'},
+                        {name: 'Docker', value: 70, color: 'linear-gradient(90deg, #2496ed, #0db7ed)'},
+                        {name: '浏览器', value: 80, color: 'linear-gradient(90deg, #4285f4, #34a853)'},
+                    ]
+                });
+                
+                const knowledge = ref([
+                    {name: 'AI产品设计', color: '#ff6b6b'},
+                    {name: 'Agent开发', color: '#4ecdc4'},
+                    {name: '前端工程', color: '#45b7d1'},
+                    {name: '后端架构', color: '#96ceb4'},
+                    {name: '数据库', color: '#ffeaa7'},
+                    {name: 'DevOps', color: '#dfe6e9'},
+                ]);
+                
+                const today = ref({ learning: 6.5, skill: 72, notes: 23, agents: 4 });
+                
+                const activities = ref([
+                    {time: '18:00', text: '人物放右下角'},
+                    {time: '17:30', text: '创建个人展示界面'},
+                    {time: '17:11', text: '每小时学习4个技能'},
+                    {time: '16:57', text: '5个子Agent并行学习'},
+                ]);
+                
+                const selectedSkill = ref(null);
+                
+                const showSkillDetail = (skill) => { selectedSkill.value = skill; };
+                const startPractice = (skill) => { alert('开始练习: ' + skill.name); selectedSkill.value = null; };
+                const runCommand = (cmd) => { alert('执行命令: ' + cmd); };
+                
+                const updateTime = () => {
+                    const now = new Date();
+                    time.value = now.toLocaleTimeString('zh-CN', {hour: '2-digit', minute: '2-digit', second: '2-digit'});
+                    
+                    const h = now.getHours();
+                    if (h >= 6 && h < 12) status.value = {icon: '🌅', text: '晨间学习', bg: 'rgba(255,200,0,0.2)', color: '#ffc800'};
+                    else if (h >= 12 && h < 14) status.value = {icon: '☀️', text: '午休中', bg: 'rgba(0,255,136,0.2)', color: '#00ff88'};
+                    else if (h >= 14 && h < 18) status.value = {icon: '💻', text: '工作中', bg: 'rgba(0,240,255,0.2)', color: '#00f0ff'};
+                    else if (h >= 18 && h < 22) status.value = {icon: '📚', text: '晚间学习', bg: 'rgba(255,0,170,0.2)', color: '#ff00aa'};
+                    else status.value = {icon: '🌙', text: '休息中', bg: 'rgba(100,100,255,0.2)', color: '#6464ff'};
+                };
+                
+                onMounted(() => {
+                    updateTime();
+                    setInterval(updateTime, 1000);
+                });
+                
+                return {
+                    status, time, attributes, attrColors,
+                    skills, knowledge, today, activities,
+                    selectedSkill,
+                    showSkillDetail, startPractice, runCommand
+                };
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>

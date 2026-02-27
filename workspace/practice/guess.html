@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>猜数字</title>
+  <style>
+    body{font-family:sans-serif;display:flex;justify-content:center;align-items:center;min-height:100vh;background:#f0f9ff}
+    .game{background:white;padding:2rem;border-radius:12px;box-shadow:0 4px 20px rgba(0,0,0,0.1);text-align:center}
+    input{padding:10px;font-size:18px;width:100px;text-align:center;border:2px solid #3b82f6;border-radius:8px;margin-right:10px}
+    button{padding:10px 20px;font-size:18px;background:#3b82f6;color:white;border:none;border-radius:8px;cursor:pointer}
+    #result{margin-top:1rem;font-size:1.2rem;color:#333}
+  </style>
+</head>
+<body>
+  <div class="game">
+    <h1>🔢 猜数字游戏</h1>
+    <p>1-100之间，猜猜看？</p>
+    <input type="number" id="guess" placeholder="输入数字">
+    <button onclick="check()">猜</button>
+    <div id="result"></div>
+    <p id="attempts" style="color:#64748b;margin-top:1rem"></p>
+  </div>
+  <script>
+    const target=Math.floor(Math.random()*100)+1;
+    let attempts=0;
+    function check(){
+      const g=parseInt(document.getElementById('guess').value);
+      attempts++;
+      if(g===target){
+        document.getElementById('result').innerHTML='🎉 恭喜猜对了！';
+        document.getElementById('attempts').innerText='共猜了'+attempts+'次';
+      }else if(g<target){
+        document.getElementById('result').innerHTML='📈 再大一点';
+      }else{
+        document.getElementById('result').innerHTML='📉 再小一点';
+      }
+    }
+  </script>
+</body>
+</html>

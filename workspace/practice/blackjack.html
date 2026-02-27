@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>幼楚的二十一点</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, sans-serif; min-height: 100vh; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; justify-content: center; align-items: center; }
+    .game { background: white; padding: 2rem; border-radius: 16px; text-align: center; box-shadow: 0 10px 40px rgba(0,0,0,0.3); max-width: 400px; }
+    h1 { color: #333; margin-bottom: 1rem; }
+    .cards { display: flex; justify-content: center; gap: 0.5rem; margin: 1rem 0; flex-wrap: wrap; }
+    .card { width: 50px; height: 70px; background: white; border: 2px solid #333; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: bold; }
+    .card.red { color: #ef4444; }
+    .card.black { color: #333; }
+    .score { font-size: 1.25rem; margin: 1rem 0; }
+    .btns { display: flex; gap: 0.5rem; justify-content: center; }
+    button { padding: 0.75rem 1.5rem; font-size: 1rem; border: none; border-radius: 8px; cursor: pointer; color: white; }
+    .hit { background: #10b981; }
+    .stand { background: #f59e0b; }
+    .new { background: #3b82f6; }
+    .result { margin-top: 1rem; font-size: 1.25rem; font-weight: bold; min-height: 1.5rem; }
+  </style>
+</head>
+<body>
+  <div class="game">
+    <h1>🃏 二十一点</h1>
+    <div>庄家</div>
+    <div class="cards" id="dealer"></div>
+    <div class="score">分数: <span id="dealerScore">0</span></div>
+    <div>你的</div>
+    <div class="cards" id="player"></div>
+    <div class="score">分数: <span id="playerScore">0</span></div>
+    <div class="btns">
+      <button class="hit" onclick="hit()">要牌</button>
+      <button class="stand" onclick="stand()">停牌</button>
+      <button class="new" onclick="newGame()">新游戏</button>
+    </div>
+    <div class="result" id="result"></div>
+  </div>
+  <script>
+    const suits = ['♠', '♥', '♦', '♣'];
+    const values = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
+    let deck = [], player = [], dealer = [], gameOver = false;
+    
+    function createDeck() {
+      deck = [];
+      for (let s of suits) for (let v of values) deck.push({s, v});
+      for (let i = deck.length - 1; i > 0; i--) {
+        let j = Math.floor(Math.random() * (i + 1));
+        [deck[i], deck[j]] = [deck[j], deck[i]];
+      }
+    }
+    
+    function cardValue(c) {
+      if (['J', 'Q', 'K'].includes(c.v)) return 10;
+      if (c.v === 'A') return 11;
+      return parseInt(c.v);
+    }
+    
+    function score(hand) {
+      let s = hand.reduce((a, c) => a + cardValue(c), 0);
+      let aces = hand.filter(c => c.v === 'A').length;
+      while (s > 21 && aces > 0) { s -= 10; aces--; }
+      return s;
+    }
+    
+    function render() {
+      const toCard = c => `<div class="card ${['♥','♦'].includes(c.s) ? 'red' : 'black'}">${c.v}${c.s}</div>`;
+      document.getElementById('player').innerHTML = player.map(toCard).join('');
+      document.getElementById('dealer').innerHTML = dealer.map(toCard).join('');
+      document.getElementById('playerScore').textContent = score(player);
+      document.getElementById('dealerScore').textContent = gameOver ? score(dealer) : '?';
+    }
+    
+    function hit() {
+      if (gameOver) return;
+      player.push(deck.pop());
+      render();
+      if (score(player) > 21) { document.getElementById('result').textContent = '💥 爆了！你输了'; document.getElementById('result').style.color = '#ef4444'; gameOver = true; }
+    }
+    
+    function stand() {
+      if (gameOver) return;
+      gameOver = true;
+      while (score(dealer) < 17) dealer.push(deck.pop());
+      render();
+      const ps = score(player), ds = score(dealer);
+      if (ds > 21 || ps > ds) { document.getElementById('result').textContent = '🎉 你赢了！'; document.getElementById('result').style.color = '#10b981'; }
+      else if (ps < ds) { document.getElementById('result').textContent = '😢 庄家赢'; document.getElementById('result').style.color = '#ef4444'; }
+      else { document.getElementById('result').textContent = '🤝 平局'; document.getElementById('result').style.color = '#f59e0b'; }
+    }
+    
+    function newGame() {
+      createDeck();
+      player = [deck.pop(), deck.pop()];
+      dealer = [deck.pop(), deck.pop()];
+      gameOver = false;
+      document.getElementById('result').textContent = '';
+      render();
+    }
+    newGame();
+  </script>
+</body>
+</html>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>五子棋</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #f5f7fa, #e4e8ec);
+      font-family: -apple-system, sans-serif;
+    }
+    h1 { color: #2c3e50; margin-bottom: 1rem; }
+    .status {
+      margin-bottom: 1rem;
+      padding: 0.5rem 1rem;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .board {
+      display: grid;
+      grid-template-columns: repeat(15, 30px);
+      grid-template-rows: repeat(15, 30px);
+      background: #deb887;
+      padding: 15px;
+      border-radius: 4px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    }
+    .cell {
+      width: 30px;
+      height: 30px;
+      border: 1px solid #8b4513;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+    .cell:hover { background: rgba(255,255,255,0.2); }
+    .piece {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    }
+    .black { background: radial-gradient(circle at 30% 30%, #444, #000); }
+    .white { background: radial-gradient(circle at 30% 30%, #fff, #ddd); }
+    button {
+      margin-top: 1rem;
+      padding: 0.75rem 1.5rem;
+      background: #3498db;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+    button:hover { background: #2980b9; }
+  </style>
+</head>
+<body>
+  <h1>♟️ 五子棋</h1>
+  <div class="status" id="status">当前: 黑方</div>
+  <div class="board" id="board"></div>
+  <button onclick="resetGame()">重新开始</button>
+
+  <script>
+    const board = document.getElementById('board');
+    const status = document.getElementById('status');
+    let currentPlayer = 'black';
+    let gameOver = false;
+    let grid = Array(15).fill(null).map(() => Array(15).fill(null));
+    
+    function initBoard() {
+      board.innerHTML = '';
+      for (let i = 0; i < 15; i++) {
+        for (let j = 0; j < 15; j++) {
+          const cell = document.createElement('div');
+          cell.className = 'cell';
+          cell.dataset.row = i;
+          cell.dataset.col = j;
+          cell.onclick = () => handleClick(i, j);
+          board.appendChild(cell);
+        }
+      }
+    }
+    
+    function handleClick(row, col) {
+      if (gameOver || grid[row][col]) return;
+      
+      grid[row][col] = currentPlayer;
+      const cell = board.children[row * 15 + col];
+      const piece = document.createElement('div');
+      piece.className = `piece ${currentPlayer}`;
+      cell.appendChild(piece);
+      
+      if (checkWin(row, col)) {
+        status.textContent = `游戏结束! ${currentPlayer === 'black' ? '黑方' : '白方'}获胜!`;
+        gameOver = true;
+        return;
+      }
+      
+      currentPlayer = currentPlayer === 'black' ? 'white' : 'black';
+      status.textContent = `当前: ${currentPlayer === 'black' ? '黑方' : '白方'}`;
+    }
+    
+    function checkWin(row, col) {
+      const directions = [[1,0],[0,1],[1,1],[1,-1]];
+      for (const [dx, dy] of directions) {
+        let count = 1;
+        for (let dir of [-1, 1]) {
+          let x = row + dx * dir, y = col + dy * dir;
+          while (x >= 0 && x < 15 && y >= 0 && y < 15 && grid[x][y] === currentPlayer) {
+            count++;
+            x += dx * dir;
+            y += dy * dir;
+          }
+        }
+        if (count >= 5) return true;
+      }
+      return false;
+    }
+    
+    function resetGame() {
+      grid = Array(15).fill(null).map(() => Array(15).fill(null));
+      currentPlayer = 'black';
+      gameOver = false;
+      status.textContent = '当前: 黑方';
+      initBoard();
+    }
+    
+    initBoard();
+  </script>
+</body>
+</html>

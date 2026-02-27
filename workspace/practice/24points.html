@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>24点计算</title>
+  <style>
+    body{font-family:sans-serif;display:flex;justify-content:center;align-items:center;min-height:100vh;background:#1e293b}
+    .card{background:white;padding:2rem;border-radius:16px;text-align:center}
+    button{padding:12px 20px;margin:5px;background:#3b82f6;color:white;border:none;border-radius:8px;cursor:pointer}
+    #result{font-size:1.2rem;margin:1rem 0;min-height:30px;color:#333}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>🎯 24点计算器</h2>
+    <div id="nums"></div>
+    <button onclick="generate()">生成新题目</button>
+    <div id="result"></div>
+  </div>
+  <script>
+    function generate(){
+      const nums=[];
+      while(nums.length<4){let n=Math.floor(Math.random()*13)+1;nums.push(n);}
+      document.getElementById('nums').innerText=nums.join(' ');
+      document.getElementById('result').innerText='用 + - × ÷ 计算24点';
+    }
+    generate();
+  </script>
+</body>
+</html>

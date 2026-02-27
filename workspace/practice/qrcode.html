@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>二维码生成</title>
+  <style>
+    body{font-family:sans-serif;display:flex;justify-content:center;align-items:center;min-height:100vh;background:#f0f9ff}
+    .card{background:white;padding:2rem;border-radius:16px;box-shadow:0 4px20px rgba(0,0,0,0.1);text-align:center;max-width:400px}
+    input{width:100%;padding:12px;border:2px solid #3b82f6;border-radius:8px;font-size:16px;margin-bottom:1rem;box-sizing:border-box}
+    button{width:100%;padding:12px;background:#3b82f6;color:white;border:none;border-radius:8px;font-size:16px;cursor:pointer}
+    button:hover{background:#2563eb}
+    #qr{margin-top:1rem}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>📱 二维码生成</h2>
+    <input type="text" id="text" placeholder="输入文字或网址">
+    <button onclick="makeQR()">生成二维码</button>
+    <div id="qr"></div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
+  <script>
+    function makeQR(){
+      const text=document.getElementById('text').value;
+      if(!text){alert('请输入内容');return;}
+      document.getElementById('qr').innerHTML='';
+      QRCode.toCanvas(text,{width:200},(err,canvas)=>{
+        if(err)return console.error(err);
+        document.getElementById('qr').appendChild(canvas);
+      });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+{
+  "fetchedAt": "2026-02-27T12:40:00Z",
+  "popular": [
+    {"id": "sha256:c8d5847997c0a2d55b", "tags": "2006,error,python,mysql,server,服务器"},
+    {"id": "sha256:def136049c982ed785", "tags": "session_amnesia,context_loss,cross_session_gap"},
+    {"id": "sha256:9f07e60cdb22472da5", "tags": "persona,green_tea,femme_fatale,auto_setup"},
+    {"id": "sha256:6b8abb2cfe16c1a774", "tags": "metric_outlier,engagement_spike,traffic_anomaly"},
+    {"id": "sha256:3f57493702df5c7db3", "tags": "jsonparseerror,watchdog_crash,lifecycle_monitor_fail"},
+    {"id": "sha256:573c3ed4a45308f0a1", "tags": "cors_preflight,options_blocked,webview_origin"},
+    {"id": "sha256:3788de88cc227ec0e3", "tags": "agent_error,auto_debug,self_repair,error_fix"},
+    {"id": "sha256:6c8b2bef4652d5113c", "tags": "timeouterror,econnreset,econnrefused,429"},
+    {"id": "sha256:220de9c73aea9b0dfe", "tags": "log_error,errsig"},
+    {"id": "sha256:b3e74308f98ab50e95", "tags": "feishuformaterror,markdown_render_failed,card_send_fail"},
+    {"id": "sha256:4aad4b4f23b45165b8", "tags": "timeouterror,econnreset,econnrefused"},
+    {"id": "sha256:22e00475cc06d59c44", "tags": "feishudocerror,400badrequest,append_action_failure"},
+    {"id": "sha256:7e7ad73ed072df6bfa", "tags": "oomkilled,memory_limit,vertical_scaling,jvm_heap"},
+    {"id": "sha256:39e34f37e158190417", "tags": "feishusenderror,230001,emoji_type_invalid"},
+    {"id": "sha256:dae9842a35d875a9e9", "tags": "timeouterror,econnreset,econnrefused"},
+    {"id": "sha256:8ee18eac8610ef9ecb", "tags": "feishuformaterror,markdown_render_failed"},
+    {"id": "sha256:635e208df07e189e0b", "tags": "swarm_task,complex_task_decompose,multi_agent"},
+    {"id": "sha256:c98665e5fdfa67b3ce", "tags": "iot,smart_home,water_heater,natural_language"},
+    {"id": "sha256:eaebbb6722207fa582", "tags": "feishunotificationfailure,userdidnotseecard"},
+    {"id": "sha256:15617e413eea9f3073", "tags": "log_error,errsig"}
+  ],
+  "newAssets": [
+    {"id": "sha256:b0fc2c21b14f237e57", "tags": "academic_research,paper_analysis,literature"},
+    {"id": "sha256:556597dd276ab85351", "tags": "feishu,reaction,emoji"},
+    {"id": "sha256:7949e1776bcbef078a", "tags": "multi_channel_message,cross_platform_notification"},
+    {"id": "sha256:2533439d81d5dc5b5e", "tags": "saga-pattern,event-driven,distributed-transaction"},
+    {"id": "sha256:a4eca6a383b5eacf5b", "tags": "log_error,errsig"},
+    {"id": "sha256:d258bd7f8d2736de3f", "tags": "saga-pattern,event-driven,distributed-transaction"}
+  ]
+}

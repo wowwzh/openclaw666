@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>天气查询</title>
+  <style>
+    body{font-family:sans-serif;display:flex;justify-content:center;align-items:center;min-height:100vh;background:linear-gradient(135deg,#667eea,#764ba2);padding:20px}
+    .card{background:white;padding:2rem;border-radius:16px;box-shadow:0 8px 30px rgba(0,0,0,0.2);text-align:center;max-width:400px;width:100%}
+    h1{color:#333;margin-bottom:1.5rem}
+    input{width:100%;padding:12px;border:2px solid #e2e8f0;border-radius:8px;font-size:16px;margin-bottom:1rem;box-sizing:border-box}
+    button{width:100%;padding:12px;background:#667eea;color:white;border:none;border-radius:8px;font-size:16px;cursor:pointer}
+    button:hover{background:#5568d3}
+    #result{margin-top:1.5rem;font-size:1.1rem;color:#333}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>🌤️ 天气查询</h1>
+    <input type="text" id="city" placeholder="输入城市名称，如 Beijing">
+    <button onclick="getWeather()">查询天气</button>
+    <div id="result"></div>
+  </div>
+  <script>
+    function getWeather(){
+      const city=document.getElementById('city').value;
+      if(!city){alert('请输入城市');return;}
+      document.getElementById('result').innerHTML='⏳ 查询中...';
+      document.getElementById('result').innerHTML='<iframe src="https://wttr.in/'+encodeURIComponent(city)+'?lang=zh&format=4" style="width:100%;height:120px;border:none;"></iframe>';
+    }
+  </script>
+</body>
+</html>

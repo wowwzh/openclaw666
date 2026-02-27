@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>习惯打卡</title>
+  <style>
+    body{font-family:sans-serif;background:#f8fafc;padding:2rem;max-width:600px;margin:0 auto}
+    h1{color:#1e293b;text-align:center}
+    .habit{display:flex;align-items:center;justify-content:space-between;background:white;padding:1rem;margin-bottom:0.5rem;border-radius:8px;box-shadow:0 1px3px rgba(0,0,0,0.1)}
+    .habit input{margin-right:0.5rem;width:20px;height:20px}
+    .streak{color:#f59e0b;font-size:0.9rem}
+    .add{display:flex;gap:0.5rem;margin-top:1rem}
+    .add input{flex:1;padding:0.75rem;border:2px solid #e2e8f0;border-radius:8px}
+    .add button{padding:0.75rem 1.5rem;background:#3b82f6;color:white;border:none;border-radius:8px;cursor:pointer}
+    .stats{text-align:center;margin-top:2rem;color:#64748b}
+  </style>
+</head>
+<body>
+  <h1>✅ 习惯打卡</h1>
+  <div id="list"></div>
+  <div class="add">
+    <input id="newHabit" placeholder="新习惯...">
+    <button onclick="add()">添加</button>
+  </div>
+  <div class="stats">连续打卡: <span id="streak">0</span> 天</div>
+  <script>
+    let habits=JSON.parse(localStorage.getItem('habits')||'[]');
+    function render(){
+      document.getElementById('list').innerHTML=habits.map((h,i)=>'<div class="habit"><label><input type="checkbox" '+(h.done?'checked':'')+' onchange="toggle('+i+')">'+h.name+'</label><span class="streak">🔥'+h.streak+'</span></div>').join('');
+      document.getElementById('streak').innerText=Math.max(...habits.map(h=>h.streak),0);
+    }
+    function add(){
+      const name=document.getElementById('newHabit').value.trim();
+      if(!name)return;
+      habits.push({name,streak:0,done:false});
+      save();
+      render();
+    }
+    function toggle(i){
+      habits[i].done=!habits[i].done;
+      if(habits[i].done)habits[i].streak++;
+      else habits[i].streak=Math.max(0,habits[i].streak-1);
+      save();
+      render();
+    }
+    function save(){localStorage.setItem('habits',JSON.stringify(habits));}
+    render();
+  </script>
+</body>
+</html>

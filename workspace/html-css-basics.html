@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HTML/CSS 基础演示</title>
+  <style>
+    /* CSS变量 */
+    :root {
+      --primary: #3b82f6;
+      --bg: #f8fafc;
+      --text: #1e293b;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    
+    /* 语义化布局 */
+    header {
+      background: var(--primary);
+      color: white;
+      padding: 1rem 2rem;
+    }
+    
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 1rem;
+    }
+    
+    main {
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+    
+    article {
+      background: white;
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    
+    /* 盒模型演示 */
+    .box-model {
+      width: 200px;
+      padding: 20px;
+      border: 5px solid var(--primary);
+      margin: 20px;
+      background: #e0f2fe;
+    }
+    
+    /* Flexbox 演示 */
+    .flex-demo {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    
+    .flex-item {
+      background: var(--primary);
+      color: white;
+      padding: 1rem;
+      border-radius: 4px;
+      flex: 1;
+      min-width: 100px;
+      text-align: center;
+    }
+    
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background: #1e293b;
+      color: white;
+      margin-top: 2rem;
+    }
+  </style>
+</head>
+<body>
+  <!-- 语义化HTML结构 -->
+  <header>
+    <h1>我的博客</h1>
+    <nav>
+      <ul>
+        <li><a href="#" style="color: white;">首页</a></li>
+        <li><a href="#" style="color: white;">关于</a></li>
+        <li><a href="#" style="color: white;">联系</a></li>
+      </ul>
+    </nav>
+  </header>
+  
+  <main>
+    <article>
+      <h2>HTML5 语义化标签</h2>
+      <p>使用语义化标签可以让代码更有意义，便于SEO和Accessibility。</p>
+    </article>
+    
+    <article>
+      <h2>盒模型演示</h2>
+      <div class="box-model">
+        我是盒模型！<br>
+        padding: 20px<br>
+        border: 5px<br>
+        margin: 20px
+      </div>
+    </article>
+    
+    <article>
+      <h2>Flexbox 布局</h2>
+      <div class="flex-demo">
+        <div class="flex-item">项目1</div>
+        <div class="flex-item">项目2</div>
+        <div class="flex-item">项目3</div>
+      </div>
+    </article>
+  </main>
+  
+  <footer>
+    <p>&copy; 2026 幼楚的学习笔记</p>
+  </footer>
+</body>
+</html>

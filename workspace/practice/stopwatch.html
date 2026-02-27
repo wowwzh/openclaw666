@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>幼楚的秒表</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, sans-serif; min-height: 100vh; display: flex; justify-content: center; align-items: center; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+    .stopwatch { text-align: center; background: white; padding: 3rem; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); }
+    .time { font-size: 72px; font-weight: bold; color: #333; font-variant-numeric: tabular-nums; }
+    .buttons { display: flex; gap: 10px; justify-content: center; margin-top: 20px; }
+    button { padding: 15px 30px; font-size: 16px; border: none; border-radius: 50px; cursor: pointer; transition: transform 0.2s:hover { transform:; }
+    button scale(1.05); }
+    .start { background: #10b981; color: white; }
+    .pause { background: #f59e0b; color: white; }
+    .lap { background: #3b82f6; color: white; }
+    .reset { background: #64748b; color: white; }
+    .laps { margin-top: 20px; max-height: 200px; overflow-y: auto; }
+    .lap-item { padding: 8px; border-bottom: 1px solid #eee; color: #666; }
+  </style>
+</head>
+<body>
+  <div class="stopwatch">
+    <div class="time" id="display">00:00.00</div>
+    <div class="buttons">
+      <button class="start" id="startBtn" onclick="start()">开始</button>
+      <button class="pause" onclick="pause()">暂停</button>
+      <button class="lap" onclick="lap()">计次</button>
+      <button class="reset" onclick="reset()">重置</button>
+    </div>
+    <div class="laps" id="laps"></div>
+  </div>
+  <script>
+    let time = 0, running = false, interval, laps = [];
+    const display = document.getElementById('display'), lapsEl = document.getElementById('laps'), startBtn = document.getElementById('startBtn');
+    function update() {
+      const min = Math.floor(time / 6000), sec = Math.floor((time % 6000) / 100), ms = Math.floor((time % 100) / 10);
+      display.textContent = `${String(min).padStart(2,'0')}:${String(sec).padStart(2,'0')}.${String(ms).padStart(2,'0')}`;
+    }
+    function start() {
+      if (!running) { running = true; interval = setInterval(() => { time++; update(); }, 10); startBtn.textContent = '继续'; }
+    }
+    function pause() { running = false; clearInterval(interval); startBtn.textContent = '开始'; }
+    function lap() { if (time > 0) { laps.unshift(display.textContent); lapsEl.innerHTML = laps.map((l,i) => `<div class="lap-item">计次 ${laps.length-i}: ${l}</div>`).join(''); }}
+    function reset() { pause(); time = 0; laps = []; lapsEl.innerHTML = ''; update(); }
+    update();
+  </script>
+</body>
+</html>

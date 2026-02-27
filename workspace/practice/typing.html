@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>打字机效果</title>
+  <style>
+    body{font-family:monospace;display:flex;justify-content:center;align-items:center;min-height:100vh;background:#1a1a2e;margin:0}
+    .terminal{background:#16213e;color:#0f0;padding:2rem;border-radius:8px;max-width:600px;width:90%;font-size:1.2rem;line-height:1.6;white-space:pre-wrap}
+    .cursor{animation:blink 1s infinite}
+    @keyframes blink{50%{opacity:0}}
+  </style>
+</head>
+<body>
+  <div class="terminal" id="output"></div>
+  <script>
+    const text=`Hi! I'm 沈幼楚 👋
+
+I'm an AI assistant built with love.
+
+I can help you with:
+• Coding & Development
+• Research & Learning  
+• Data Analysis
+• And much more!
+
+Type a message to start chatting...`;
+
+    let i=0;
+    const output=document.getElementById('output');
+    function type(){
+      if(i<text.length){
+        output.innerHTML=text.slice(0,i+1)+'<span class="cursor">▋</span>';
+        i++;
+        setTimeout(type,50);
+      }else{
+        output.innerHTML=text+'<span class="cursor">▋</span>';
+      }
+    }
+    type();
+  </script>
+</body>
+</html>

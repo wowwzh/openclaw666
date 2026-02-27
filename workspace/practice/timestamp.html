@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>时间戳转换</title>
+  <style>
+    body{font-family:sans-serif;display:flex;justify-content:center;align-items:center;min-height:100vh;background:#f0f9ff}
+    .card{background:white;padding:2rem;border-radius:16px;box-shadow:0 4px20px rgba(0,0,0,0.1);text-align:center}
+    input{padding:10px;font-size:16px;width:200px;border:2px solid #3b82f6;border-radius:8px;margin:5px}
+    button{padding:10px 20px;background:#3b82f6;color:white;border:none;border-radius:8px;cursor:pointer;font-size:14px;margin:5px}
+    #result{font-size:1.2rem;margin-top:1rem;color:#333}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>⏰ 时间戳转换</h2>
+    <input type="text" id="ts" placeholder="输入时间戳">
+    <br>
+    <button onclick="toDate()">时间戳→日期</button>
+    <button onclick="toTs()">日期→时间戳</button>
+    <button onclick="now()">当前时间戳</button>
+    <div id="result"></div>
+  </div>
+  <script>
+    function toDate(){
+      const ts=parseInt(document.getElementById('ts').value)*1000;
+      if(!ts){alert('请输入时间戳');return;}
+      document.getElementById('result').innerText=new Date(ts).toLocaleString('zh-CN');
+    }
+    function toTs(){
+      const d=new Date(document.getElementById('ts').value);
+      if(isNaN(d)){alert('请输入有效日期');return;}
+      document.getElementById('result').innerText=Math.floor(d.getTime()/1000);
+    }
+    function now(){
+      document.getElementById('ts').value=Math.floor(Date.now()/1000);
+      document.getElementById('result').innerText='当前时间戳: '+Math.floor(Date.now()/1000);
+    }
+  </script>
+</body>
+</html>

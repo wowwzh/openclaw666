@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<title>毛玻璃效果</title>
+<style>
+body{font-family:system-ui;min-height:100vh;margin:0;display:flex;justify-content:center;align-items:center;background:url('https://picsum.photos/1920/1080?blur') center/cover}
+.card{width:350px;padding:40px;background:rgba(255,255,255,0.15);backdrop-filter:blur(20px);border-radius:20px;border:1px solid rgba(255,255,255,0.2);box-shadow:0 8px32px rgba(0,0,0,0.1);color:white}
+.card h2{margin:0 0 10px;font-size:1.8rem}
+.card p{opacity:0.8;line-height:1.6}
+.card button{width:100%;padding:12px;margin-top:20px;background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.3);border-radius:8px;color:white;cursor:pointer;transition:0.3s}
+.card button:hover{background:rgba(255,255,255,0.3)}
+</style>
+</head>
+<body>
+<div class="card">
+<h2>毛玻璃效果</h2>
+<p>使用 backdrop-filter: blur() 实现磨砂玻璃质感。</p>
+<p>让背景图片透过卡片模糊显示，营造现代UI风格。</p>
+<button>了解更多</button>
+</div>
+</body>
+</html>
